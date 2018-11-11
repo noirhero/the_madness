@@ -1,0 +1,139 @@
+{ "frames": {
+   "idle 0.ase": {
+    "frame": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "idle 1.ase": {
+    "frame": { "x": 39, "y": 0, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "idle 2.ase": {
+    "frame": { "x": 78, "y": 0, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "idle 3.ase": {
+    "frame": { "x": 117, "y": 0, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "idle 4.ase": {
+    "frame": { "x": 156, "y": 0, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "idle 5.ase": {
+    "frame": { "x": 195, "y": 0, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "idle 6.ase": {
+    "frame": { "x": 0, "y": 53, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "idle 7.ase": {
+    "frame": { "x": 39, "y": 53, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "walk 0.ase": {
+    "frame": { "x": 78, "y": 53, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "walk 1.ase": {
+    "frame": { "x": 117, "y": 53, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "walk 2.ase": {
+    "frame": { "x": 156, "y": 53, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "walk 3.ase": {
+    "frame": { "x": 195, "y": 53, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "walk 4.ase": {
+    "frame": { "x": 0, "y": 106, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "walk 5.ase": {
+    "frame": { "x": 39, "y": 106, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "walk 6.ase": {
+    "frame": { "x": 78, "y": 106, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   },
+   "walk 7.ase": {
+    "frame": { "x": 117, "y": 106, "w": 39, "h": 53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 53 },
+    "sourceSize": { "w": 39, "h": 53 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.9",
+  "image": "rossa.png",
+  "format": "RGBA8888",
+  "size": { "w": 256, "h": 256 },
+  "scale": "1"
+ }
+}

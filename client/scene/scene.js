@@ -6,7 +6,15 @@ class Scene {
     this.fps_ = new FramePerSecond();
   }
 
+  Initialize() {
+    return this;
+  }
+
+  Release() {
+    return this;
+  }
+
   Update() {
-    console.log("FPS: " + this.fps_.Update(this.timer_.Update().Delta).FPS);
+    this.fps_.Update(this.timer_.Update().Delta);
   }
 }
