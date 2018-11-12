@@ -12,7 +12,7 @@ class EditorAnimScene extends Scene {
       fixed: false,
       label: "Main",
     }).addButton("OPEN", function() {
-      const element_div = document.createElement("div");
+      const element_div = document.createElement("load");
       element_div.innerHTML = "<input type=\"file\">";
 
       const dialog = element_div.firstChild;
@@ -22,6 +22,17 @@ class EditorAnimScene extends Scene {
           const reader = new FileReader();
           reader.onload = function() {
             console.log(reader.result);
+
+            const save_data = {
+              a: "a",
+              b: "b",
+            };
+            const data = JSON.stringify(save_data, null, " ");
+            const blob = new Blob([data], {type: "application/json"});
+            const element_save = document.createElement("a");
+            element_save.href = URL.createObjectURL(blob);
+            element_save.download = "save.json";
+            element_save.click();
           };
           reader.readAsText(file);
         }
