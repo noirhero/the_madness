@@ -4,6 +4,7 @@ class Scene {
   constructor() {
     this.timer_ = new Timer();
     this.fps_ = new FramePerSecond();
+    this.world_ = new CES.World();
   }
 
   Initialize() {
@@ -16,5 +17,6 @@ class Scene {
 
   Update() {
     this.fps_.Update(this.timer_.Update().Delta);
+    this.world_.update(this.timer_.Delta);
   }
 }

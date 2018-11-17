@@ -4,7 +4,9 @@ function ReadFile(url, callback) {
   "use strict";
 
   const request = new XMLHttpRequest();
-  request.onload = callback;
+  request.onload = function() {
+    callback(request.response);
+  };
   request.open("GET", url, true);
   request.send();
 }
