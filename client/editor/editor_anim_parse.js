@@ -35,12 +35,6 @@ function AnimationParse(json_text) {
         vec2.fromValues(left, bottom),
         vec2.fromValues(right, bottom),
       ],
-      reverse_rect: [
-        vec2.fromValues(right, top),
-        vec2.fromValues(left, top),
-        vec2.fromValues(right, bottom),
-        vec2.fromValues(left, bottom),
-      ],
     };
     frame_info.total_duration += src_frame.duration * 0.001;
   }

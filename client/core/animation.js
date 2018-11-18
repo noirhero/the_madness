@@ -6,13 +6,15 @@ function Animation(url) {
   "use strict";
 
   let data = null;
-
-  function OnLoadAnimation(json_text) {
+  ReadFile(url, function(json_text) {
     data = JSON.parse(json_text);
-  }
-  ReadFile(url, OnLoadAnimation);
+  });
 
-  this.GetTexCoord = function(state, duration, reverse_x) {
+  this.GetData = function() {
+    return data;
+  };
+
+  this.GetTexCoord = function(state, duration) {
     function RecursiveFind(frames, duration, start, end) {
       const step = end - start;
       const offset = (0 === (step % 2)) ? 0 : 1;
@@ -26,7 +28,7 @@ function Animation(url) {
         return RecursiveFind(frames, duration, pivot, end);
       }
 
-      return (true === reverse_x) ? frame.reverse_rect : frame.rect;
+      return frame.rect;
     }
 
     const frame_info = data[state];
