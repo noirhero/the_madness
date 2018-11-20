@@ -5,6 +5,7 @@ class EditorAnimScene extends Scene {
     super();
 
     this.entity_ = new CES.Entity();
+    this.entity_.addComponent(new ComponentViewport());
     this.world_.addEntity(this.entity_);
 
     this.controlKit_ = new ControlKit();
@@ -19,7 +20,7 @@ class EditorAnimScene extends Scene {
       label: "Main",
     }).addButton("OPEN", function() {
       const element_load = document.createElement("load");
-      element_load.innerHTML = "<input type=\"file\">";
+      element_load.innerHTML = "<input type=\"file\" accept=\".json\">";
 
       const dialog = element_load.firstChild;
       dialog.addEventListener("change", function() {
@@ -27,12 +28,11 @@ class EditorAnimScene extends Scene {
         if (file.name.match(/.json/i)) {
           const reader = new FileReader();
           reader.onload = function() {
-            entity.removeComponent("Anim");
-
             const anim_data = AnimationParse(reader.result);
             const anim_blob = new Blob([JSON.stringify(anim_data, null, " ")], {type: "application/json"});
             const anim_url = URL.createObjectURL(anim_blob);
 
+            entity.removeComponent("Anim");
             entity.addComponent(new ComponentAnim(anim_url));
 
             const panel = contolKit.addPanel({
@@ -126,7 +126,25 @@ class EditorAnimScene extends Scene {
       });
       dialog.click();
     }, {
-      label: "json File"
+      label: "json File",
+    }).addButton("LOAD", function() {
+      const element_load = document.createElement("load");
+      element_load.innerHTML = "<input type=\"file\" accept=\".png\">";
+
+      const dialog = element_load.firstChild;
+      dialog.addEventListener("change", function() {
+        const file = dialog.files[0];
+        if (file.name.match(/.png/i)) {
+          entity.removeComponent("Texture");
+          entity.addComponent(new ComponentTexture(URL.createObjectURL(file)))
+        }
+        else {
+          alert("File not supported, .png files only");
+        }
+      });
+      dialog.click();
+    }, {
+      label: "png File",
     });
 
     return this;
