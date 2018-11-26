@@ -12,6 +12,7 @@ class SceneManager {
       this.current_scene_ = next_scene.Initialize();
     }
 
+    WebGLUpdate();
     Frame(this.Run.bind(this));
   }
 }

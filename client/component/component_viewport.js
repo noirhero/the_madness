@@ -17,4 +17,4 @@ const ComponentViewport = CES.Component.extend({
 
     this.transform_vp = mat4.create();
   },
-})
+});
