@@ -4,6 +4,8 @@ class EditorAnimScene extends Scene {
   constructor() {
     super();
 
+    this.world_.addSystem(new SystemViewport);
+
     this.entity_ = new CES.Entity();
     this.entity_.addComponent(new ComponentViewport());
     this.world_.addEntity(this.entity_);

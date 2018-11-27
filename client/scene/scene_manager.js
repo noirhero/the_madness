@@ -6,13 +6,14 @@ class SceneManager {
   }
 
   Run() {
+    WebGLUpdate();
+
     const next_scene = this.current_scene_.Update();
     if(next_scene) {
       this.current_scene_.Release();
       this.current_scene_ = next_scene.Initialize();
     }
 
-    WebGLUpdate();
     Frame(this.Run.bind(this));
   }
 }

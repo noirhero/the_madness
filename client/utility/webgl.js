@@ -29,4 +29,12 @@ function WebGLInitialize() {
 function WebGLUpdate() {
   CANVAS_W = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
   CANVAS_H = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+  if(CANVAS_W !== CANVAS.width) {
+    CANVAS.width = CANVAS_W;
+  }
+
+  if(CANVAS_H !== CANVAS.height) {
+    CANVAS.height = CANVAS_H;
+  }
 }
