@@ -38,3 +38,38 @@ function WebGLUpdate() {
     CANVAS.height = CANVAS_H;
   }
 }
+
+function WebGLCreateShader(src, type) {
+  let shader = GL.createShader(type);
+  GL.shaderSource(shader, src);
+  GL.compileShader(shader);
+
+  if (!GL.getShaderParameter(shader, GL.COMPILE_STATUS)) {
+    alert("Compile shader failed.\n" + src + "\n" + GL.getShaderInfoLog(shader));
+    shader = null;
+  }
+
+  return shader;
+}
+
+function WebGLCreateProgram(vs, fs) {
+  let program = GL.createProgram();
+  GL.attachShader(program, vs);
+  GL.attachShader(program, fs);
+  GL.linkProgram(program);
+
+  if (!GL.getProgramParameter(program, GL.LINK_STATUS)) {
+    alert("Prgram link failed.");
+    program = null;
+  }
+
+  return program;
+}
+
+function WebGLCreateBuffer(target, src, usage) {
+  let buffer = GL.createBuffer();
+  GL.bindBuffer(target, buffer);
+  GL.bufferData(target, src, usage);
+
+  return buffer;
+}

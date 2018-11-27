@@ -23,4 +23,8 @@ function Texture(url) {
   this.GetTexture = function() {
     return texture;
   };
+
+  this.IsRenderable = function() {
+    return (null !== image) ? false : true;
+  };
 }
