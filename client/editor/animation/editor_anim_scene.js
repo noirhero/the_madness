@@ -6,6 +6,10 @@ class EditorAnimScene extends Scene {
 
     const entity = new CES.Entity();
     entity.addComponent(new ComponentViewport());
+    entity.addComponent(new ComponentTexture("../../data/animation/rossa.png"));
+    entity.addComponent(new ComponentScale(100, 100));
+    entity.addComponent(new ComponentPos());
+    entity.addComponent(new ComponentTexcoord());
 
     const world = new CES.World();
     world.addSystem(new SystemViewport);

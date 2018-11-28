@@ -61,64 +61,75 @@ const SystemRenderSprite = CES.System.extend({
     this.s_sprite = GL.getUniformLocation(program, "sampler_sprite");
   },
   update: function() {
-    const world = this.world;
-    const num_max_offset = BATCH_QUAD_XYZIUV.length;
+    function SettingUp() {
+      this_system.world.getEntities("Viewport").some(function(entity) {
+        const viewport = entity.getComponent("Viewport");
 
-    const program = this.program;
-    const vb = this.vb;
-    const ib = this.ib;
-    const a_world_pos = this.a_world_pos;
-    const a_tex_coord = this.a_tex_coord;
-    const a_tex_index = this.a_tex_index;
-    const u_vp_transform = this.u_vp_transform;
-    const s_sprite = this.s_sprite;
+        GL.depthFunc(GL.GREATER);
 
-    let num_draw = 0;
-    let offset = 0;
-    let bind_textures = [];
-    let bind_texture_indices = [];
+        GL.disable(GL.CULL_FACE);
+        GL.frontFace(GL.CW);
+        GL.enable(GL.BLEND);
+        GL.blendFuncSeparate(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA, GL.ONE, GL.ONE_MINUS_SRC_ALPHA);
 
-    let is_first = true;
+        GL.clearColor(0.12, 0.12, 0.12, 1);
+        GL.clearDepth(0);
+
+        GL.enableVertexAttribArray(0);
+        GL.enableVertexAttribArray(1);
+
+        GL.viewport(0, 0, viewport.width, viewport.height);
+        GL.enable(GL.DEPTH_TEST);
+        GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
+
+        GL.useProgram(this_system.program);
+        GL.uniformMatrix4fv(this_system.u_vp_transform, false, viewport.transform_vp);
+        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this_system.ib);
+        GL.bindBuffer(GL.ARRAY_BUFFER, this_system.vb);
+        GL.enableVertexAttribArray(2);
+        GL.vertexAttribPointer(this_system.a_world_pos, 3, GL.FLOAT, false, 24, 0);
+        GL.vertexAttribPointer(this_system.a_tex_coord, 2, GL.FLOAT, false, 24, 12);
+        GL.vertexAttribPointer(this_system.a_tex_index, 1, GL.FLOAT, false, 24, 20);
+
+        return true;
+      });
+    }
+
+    function ResetUp() {
+      num_draw = 0;
+      offset = 0;
+      bind_textures.length = 0;
+      bind_texture_indices.length = 0;
+    }
+
     function Draw() {
-      if(true === is_first) {
-        is_first = false;
-
-        world.getEntities("Viewport").some(function(entity) {
-          const viewport = entity.getComponent("Viewport");
-
-          GL.viewport(0, 0, viewport.width, viewport.height);
-          GL.enable(GL.DEPTH_TEST);
-          GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
-
-          GL.useProgram(program);
-          GL.uniformMatrix4fv(u_vp_transform, false, viewport.transform_vp);
-          GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, ib);
-          GL.bindBuffer(GL.ARRAY_BUFFER, vb);
-          GL.enableVertexAttribArray(2);
-          GL.vertexAttribPointer(a_world_pos, 3, GL.FLOAT, false, 24, 0);
-          GL.vertexAttribPointer(a_tex_coord, 2, GL.FLOAT, false, 24, 12);
-          GL.vertexAttribPointer(a_tex_index, 1, GL.FLOAT, false, 24, 20);
-
-          return true;
-        });
+      if(!is_setting_up) {
+        SettingUp();
+        is_setting_up = true;
       }
 
-      GL.bufferSubData(GL.ARRAY_BUFFER, 0, BATYCH_QUAD_XYZIUV);
+      GL.bufferSubData(GL.ARRAY_BUFFER, 0, BATCH_QUAD_XYZIUV);
 
       const num_bind_textures = bind_textures.length;
       for(let bi = 0; bi < num_bind_textures; ++bi) {
         GL.activeTexture(GL.TEXTURE0 + bi);
         GL.bindTexture(GL.TEXTURE_2D, bind_textures[bi].GetTexture());
       }
-      GL.uniform1iv(s_sprite, bind_texture_indices);
+      GL.uniform1iv(this_system.s_sprite, bind_texture_indices);
 
       GL.drawElements(GL.TRIANGLES, num_draw * 6/*two polygon*/, GL.UNSIGNED_SHORT, 0);
 
-      num_draw = 0;
-      offset = 0;
-      bind_textures.length = 0;
-      bind_texture_indices.length = 0;
+      ResetUp();
     }
+
+    const this_system = this;
+    const num_max_offset = BATCH_QUAD_XYZIUV.length;
+
+    let is_setting_up = false;
+    let num_draw = 0;
+    let offset = 0;
+    let bind_textures = [];
+    let bind_texture_indices = [];
 
     let scale = null;
     let rot = quat.create();
@@ -129,7 +140,7 @@ const SystemRenderSprite = CES.System.extend({
     let world_pos = vec3.create();
     let comp_rot = null;
 
-    world.getEntities("Scale", "Pos", "Texture", "Texcoord").forEach(function(entity) {
+    this_system.world.getEntities("Scale", "Pos", "Texture", "Texcoord").forEach(function(entity) {
       current_texture = entity.getComponent("Texture").texture;
       if(false === current_texture.IsRenderable()) {
         return;
@@ -158,12 +169,11 @@ const SystemRenderSprite = CES.System.extend({
 
       scale = entity.getComponent("Scale").scale;
       pos = entity.getComponent("Pos").pos;
-      texcoord = entity.getComponent("Texcoord").texcoord;
+      texcoord = entity.getComponent("Texcoord").values;
 
       comp_rot = entity.getComponent("Rot");
       if(comp_rot) {
-        quat.fromEuler(rot, comp_rot.rot[0], comp_rot.rot[1], comp_rot.rot[2]);
-        mat4.fromRotationTranslationScale(world_transform, rot, pos, scale);
+        mat4.fromRotationTranslationScale(world_transform, comp_rot.rot, pos, scale);
       }
       else {
         mat4.fromRotationTranslationScale(world_transform, IDENTITY_QUAT, pos, scale);
@@ -188,5 +198,5 @@ const SystemRenderSprite = CES.System.extend({
     if(0 < num_draw) {
       Draw();
     }
-  }
+  },
 });
