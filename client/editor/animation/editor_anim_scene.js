@@ -12,6 +12,7 @@ class EditorAnimScene extends Scene {
 
     const world = new CES.World();
     world.addSystem(new SystemViewport);
+    world.addSystem(new SystemAnimation);
     world.addSystem(new SystemRenderSprite);
     world.addEntity(entity);
 
