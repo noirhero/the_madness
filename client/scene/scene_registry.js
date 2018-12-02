@@ -3,6 +3,7 @@
 function GetSceneInRegistry(name) {
   switch(name) {
   case "EditorAnimScene": return new EditorAnimScene();
+  case "EditorEntityScene": return new EditorEntityScene();
   default: return new Scene();
   }
 }
