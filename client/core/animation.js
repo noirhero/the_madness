@@ -31,7 +31,7 @@ function Animation(url) {
       return frame.rect;
     }
 
-    const frame_info = data[state];
+    const frame_info = data ? data[state] : null;
     if(!frame_info) {
       return EMPTY_TEXCOORD;
     }
