@@ -27,6 +27,16 @@ class EditorAnimScene extends Scene {
     let contolKit = this.controlKit_;
     let edit_data = this.edit_data_;
 
+    function OnSaveAnimationJsonFile() {
+      const comp_anim = entity.getComponent("Anim");
+      const blob = new Blob([JSON.stringify(comp_anim.anim.GetData(), null, " ")], {type: "application/json"});
+
+      const element_save = document.createElement("a");
+      element_save.href = URL.createObjectURL(blob);
+      element_save.download = entity.name;
+      element_save.click();
+    }
+
     function OnLoadAnimationTextFile(event) {
       const anim_data = AnimationParse(event.target.result);
       const anim_blob = new Blob([JSON.stringify(anim_data, null, " ")], {type: "application/json"});
@@ -112,15 +122,7 @@ class EditorAnimScene extends Scene {
           comp_anim_data[edit_data[i].name] = comp_anim_data[i];
           delete comp_anim_data[i];
         }
-      }).addButton("SAVE", function() {
-        const comp_anim = entity.getComponent("Anim");
-        const blob = new Blob([JSON.stringify(comp_anim.anim.GetData(), null, " ")], {type: "application/json"});
-
-        const element_save = document.createElement("a");
-        element_save.href = URL.createObjectURL(blob);
-        element_save.download = entity.name;
-        element_save.click();
-      });
+      }).addButton("SAVE", OnSaveAnimationJsonFile);
     }
 
     function OnOpenJsonFile() {
