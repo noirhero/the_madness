@@ -26,6 +26,11 @@ class EditorEntityScene extends Scene {
         anim_duration: 0,
         anim_url: "none",
       },
+      pos: {
+        x: 0,
+        y: 0,
+        z: 0,
+      },
     };
 
     controlKit.addPanel({
@@ -48,6 +53,17 @@ class EditorEntityScene extends Scene {
             entity.addComponent(new ComponentAnim(edit_anim_data.anim_url));
           });
       }
+    }).addButton("Position", function() {
+      const edit_pos_data = edit_data.pos;
+
+      if(!entity.getComponent("Pos")) {
+        entity.addComponent(new ComponentPos());
+        entity_panel.addGroup({
+          label: "Position",
+        }).addNumberInput(edit_pos_data, "x", {label: "X"})
+          .addNumberInput(edit_pos_data, "y", {label: "Y"})
+          .addNumberInput(edit_pos_data, "z", {label: "Z"});
+      }
     }).addSubGroup({
       label: "Management"
     }).addStringInput(edit_data, "name").addButton("SAVE", function() {
@@ -55,6 +71,9 @@ class EditorEntityScene extends Scene {
 
       if(entity.getComponent("Anim")) {
         save_data.anim_comp = edit_data.anim;
+      }
+      if(entity.getComponent("Pos")) {
+        save_data.pos_comp = edit_data.pos;
       }
 
       const blob = new Blob([JSON.stringify(save_data, null, " ")], {type: "application/json"});
@@ -64,6 +83,9 @@ class EditorEntityScene extends Scene {
       element_save.download = edit_data.name;
       element_save.click();
     }).addButton("RESET", function() {
+      entity.removeComponent("Anim");
+      entity.removeComponent("Pos");
+
       entity_panel.disable();
       entity_panel = controlKit.addPanel({
         fixed: false,
