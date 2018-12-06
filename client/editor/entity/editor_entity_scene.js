@@ -31,6 +31,11 @@ class EditorEntityScene extends Scene {
         y: 0,
         z: 0,
       },
+      rot: {
+        x: 0,
+        y: 0,
+        z: 0,
+      },
     };
 
     controlKit.addPanel({
@@ -62,7 +67,24 @@ class EditorEntityScene extends Scene {
           label: "Position",
         }).addNumberInput(edit_pos_data, "x", {label: "X"})
           .addNumberInput(edit_pos_data, "y", {label: "Y"})
-          .addNumberInput(edit_pos_data, "z", {label: "Z"});
+          .addNumberInput(edit_pos_data, "z", {label: "Z"})
+          .addButton("Reload", function() {
+            entity.getComponent("Pos").pos = vec3.fromValues(edit_pos_data.x, edit_pos_data.y, edit_pos_data.z);
+          });
+      }
+    }).addButton("Rotation", function() {
+      const edit_rot_data = edit_data.rot;
+
+      if(!entity.getComponent("Rot")) {
+        entity.addComponent(new ComponentRot());
+        entity_panel.addGroup({
+          label: "Rotation",
+        }).addNumberInput(edit_rot_data, "x", {label: "X Degree"})
+          .addNumberInput(edit_rot_data, "y", {label: "Y Degree"})
+          .addNumberInput(edit_rot_data, "z", {label: "Z Degree"})
+          .addButton("RELOAD", function() {
+            quat.fromEuler(entity.getComponent("Rot").rot, edit_rot_data.x, edit_rot_data.y, edit_rot_data.z);
+          });
       }
     }).addSubGroup({
       label: "Management"
@@ -75,6 +97,9 @@ class EditorEntityScene extends Scene {
       if(entity.getComponent("Pos")) {
         save_data.pos_comp = edit_data.pos;
       }
+      if(entity.getComponent("Rot")) {
+        save_data.rot_comp = edit_data.rot;
+      }
 
       const blob = new Blob([JSON.stringify(save_data, null, " ")], {type: "application/json"});
 
@@ -85,6 +110,7 @@ class EditorEntityScene extends Scene {
     }).addButton("RESET", function() {
       entity.removeComponent("Anim");
       entity.removeComponent("Pos");
+      entity.removeComponent("Rot");
 
       entity_panel.disable();
       entity_panel = controlKit.addPanel({
