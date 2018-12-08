@@ -10,14 +10,13 @@ class EditorAnimScene extends Scene {
     entity.addComponent(new ComponentPos());
     entity.addComponent(new ComponentTexcoord());
 
-    const world = new CES.World();
+    const world = this.world_;
     world.addSystem(new SystemViewport);
     world.addSystem(new SystemAnimation);
     world.addSystem(new SystemRenderSprite);
     world.addEntity(entity);
 
     this.entity_ = entity;
-    this.world_ = world;
     this.controlKit_ = new ControlKit();
     this.edit_data_ = {};
   }

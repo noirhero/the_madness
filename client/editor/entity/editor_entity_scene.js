@@ -4,8 +4,16 @@ class EditorEntityScene extends Scene {
   constructor() {
     super();
 
-    this.entity_ = new CES.Entity();
-    this.world_.addEntity(this.entity_);
+    const entity = new CES.Entity();
+    entity.addComponent(new ComponentViewport());
+
+    const world = this.world_;
+    world.addSystem(new SystemViewport);
+    world.addSystem(new SystemAnimation);
+    world.addSystem(new SystemRenderSprite);
+    world.addEntity(entity);
+
+    this.entity_ = entity;
     this.controlKit_ = new ControlKit();
   }
 
@@ -36,6 +44,14 @@ class EditorEntityScene extends Scene {
         y: 0,
         z: 0,
       },
+      scale: {
+        x: 1,
+        y: 1,
+        z: 1,
+      },
+      texture: {
+        url: "",
+      },
     };
 
     controlKit.addPanel({
@@ -54,7 +70,6 @@ class EditorEntityScene extends Scene {
           .addStringInput(edit_anim_data, "anim_url", {label: "URL"})
           .addButton("Reload", function() {
             entity.removeComponent("Anim");
-            //entity.addComponent(new ComponentAnim(edit_anim_data.anim_url.replace(/[../]/g, "")));
             entity.addComponent(new ComponentAnim(edit_anim_data.anim_url));
           });
       }
@@ -82,8 +97,42 @@ class EditorEntityScene extends Scene {
         }).addNumberInput(edit_rot_data, "x", {label: "X Degree"})
           .addNumberInput(edit_rot_data, "y", {label: "Y Degree"})
           .addNumberInput(edit_rot_data, "z", {label: "Z Degree"})
-          .addButton("RELOAD", function() {
+          .addButton("Reload", function() {
             quat.fromEuler(entity.getComponent("Rot").rot, edit_rot_data.x, edit_rot_data.y, edit_rot_data.z);
+          });
+      }
+    }).addButton("Scale", function() {
+      const edit_scale_data = edit_data.scale;
+
+      if(!entity.getComponent("Scale")) {
+        entity.addComponent(new ComponentScale());
+        entity_panel.addGroup({
+          label: "Scale",
+        }).addNumberInput(edit_scale_data, "x", {label: "X"})
+          .addNumberInput(edit_scale_data, "y", {label: "Y"})
+          .addNumberInput(edit_scale_data, "z", {label: "Z"})
+          .addButton("Reload", function() {
+            entity.getComponent("Scale").scale = vec3.fromValues(edit_scale_data.x, edit_scale_data.y, edit_scale_data.z);
+          });
+      }
+    }).addButton("Texcoord", function() {
+      if(!entity.getComponent("Texcoord")) {
+        entity.addComponent(new ComponentTexcoord());
+        entity_panel.addGroup({
+          label: "Texcoord",
+        });
+      }
+    }).addButton("Texture", function() {
+      const edit_texture_data = edit_data.texture;
+
+      if(!entity.getComponent("Texture")) {
+        entity.addComponent(new ComponentTexture());
+        entity_panel.addGroup({
+          label: "Texture",
+        }).addStringInput(edit_texture_data, "url", {label: "URL"})
+          .addButton("Reload", function() {
+            entity.removeComponent("Texture");
+            entity.addComponent(new ComponentTexture(edit_texture_data.url));
           });
       }
     }).addSubGroup({
@@ -93,12 +142,23 @@ class EditorEntityScene extends Scene {
 
       if(entity.getComponent("Anim")) {
         save_data.anim_comp = edit_data.anim;
+        save_data.anim_comp.url = save_data.anim_comp.url.replace(/[../]/g, "");
       }
       if(entity.getComponent("Pos")) {
         save_data.pos_comp = edit_data.pos;
       }
       if(entity.getComponent("Rot")) {
         save_data.rot_comp = edit_data.rot;
+      }
+      if(entity.getComponent("Scale")) {
+        save_data.scale_comp = edit_data.scale;
+      }
+      if(entity.getComponent("Texcoord")) {
+        save_data.texcoord_comp = {};
+      }
+      if(entity.getComponent("Texture")) {
+        save_data.texture_comp = edit_data.texture;
+        save_data.texture_comp.url = save_data.texture_comp.url.replace(/[../]/g, "");
       }
 
       const blob = new Blob([JSON.stringify(save_data, null, " ")], {type: "application/json"});
@@ -111,6 +171,9 @@ class EditorEntityScene extends Scene {
       entity.removeComponent("Anim");
       entity.removeComponent("Pos");
       entity.removeComponent("Rot");
+      entity.removeComponent("Scale");
+      entity.removeComponent("Texcoord");
+      entity.removeComponent("Texture");
 
       entity_panel.disable();
       entity_panel = controlKit.addPanel({
