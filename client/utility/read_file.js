@@ -5,6 +5,7 @@ function ReadFile(url, callback) {
 
   const request = new XMLHttpRequest();
   request.onload = function() {
+    console.log("On Load : " + url);
     callback(request.response);
   };
   request.open("GET", url, true);

@@ -8,6 +8,8 @@ function Texture(url) {
   let texture = GL.createTexture();
   let image = new Image();
   image.onload = function() {
+    console.log("On Load : " + url);
+
     GL.activeTexture(GL.TEXTURE0);
     GL.bindTexture(GL.TEXTURE_2D, texture);
     GL.pixelStorei(GL.UNPACK_FLIP_Y_WEBGL, true);

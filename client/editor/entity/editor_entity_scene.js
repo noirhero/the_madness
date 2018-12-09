@@ -30,9 +30,9 @@ class EditorEntityScene extends Scene {
     let edit_data = {
       name: "none",
       anim: {
-        anim_state: "none",
-        anim_duration: 0,
-        anim_url: "none",
+        state: "none",
+        duration: 0,
+        url: "none",
       },
       pos: {
         x: 0,
@@ -65,12 +65,14 @@ class EditorEntityScene extends Scene {
         entity.addComponent(new ComponentAnim());
         entity_panel.addGroup({
           label: "Animation",
-        }).addStringInput(edit_anim_data, "anim_state", {label: "State"})
-          .addNumberInput(edit_anim_data, "anim_duration", {label: "Duration"})
-          .addStringInput(edit_anim_data, "anim_url", {label: "URL"})
+        }).addStringInput(edit_anim_data, "state", {label: "State"})
+          .addNumberInput(edit_anim_data, "duration", {label: "Duration"})
+          .addStringInput(edit_anim_data, "url", {label: "URL"})
           .addButton("Reload", function() {
             entity.removeComponent("Anim");
-            entity.addComponent(new ComponentAnim(edit_anim_data.anim_url));
+            entity.addComponent(new ComponentAnim(edit_anim_data.url));
+            entity.getComponent("Anim").state = edit_anim_data.state;
+            entity.getComponent("Anim").duration = edit_anim_data.duration;
           });
       }
     }).addButton("Position", function() {
@@ -142,7 +144,7 @@ class EditorEntityScene extends Scene {
 
       if(entity.getComponent("Anim")) {
         save_data.anim_comp = edit_data.anim;
-        save_data.anim_comp.url = save_data.anim_comp.url.replace(/[../]/g, "");
+        save_data.anim_comp.url = save_data.anim_comp.url.slice(save_data.anim_comp.url.indexOf("data"));
       }
       if(entity.getComponent("Pos")) {
         save_data.pos_comp = edit_data.pos;
@@ -158,7 +160,7 @@ class EditorEntityScene extends Scene {
       }
       if(entity.getComponent("Texture")) {
         save_data.texture_comp = edit_data.texture;
-        save_data.texture_comp.url = save_data.texture_comp.url.replace(/[../]/g, "");
+        save_data.texture_comp.url = save_data.texture_comp.url.slice(save_data.texture_comp.url.indexOf("data"));
       }
 
       const blob = new Blob([JSON.stringify(save_data, null, " ")], {type: "application/json"});
