@@ -20,7 +20,7 @@ class GameScene extends Scene {
         }
       });
 
-      scene_data.entites.forEach(entity_url => {
+      scene_data.entities.forEach(entity_url => {
         ReadFile(entity_url, entity_text => {
           const load_entity = EntityLoad(JSON.parse(entity_text));
           if(load_entity) {

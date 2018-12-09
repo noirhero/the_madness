@@ -2,11 +2,11 @@
  "systems": [
    "animation",
    "render_sprite",
-   "viewport",
+   "viewport"
  ],
  "entities": [
    "data/entity_system.json",
-   "data/entity_rossa.json",
+   "data/entity_rossa.json"
  ],
- "next": "data/scene/system_test.json",
+ "next": "data/scene/system_test.json"
 }
