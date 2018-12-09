@@ -132,12 +132,12 @@ const SystemRenderSprite = CES.System.extend({
     let bind_texture_indices = [];
 
     let scale = null;
-    let rot = quat.create();
+    let rot = glMatrix.quat.create();
     let pos = null;
     let texcoord = null;
     let current_texture = null;
-    let world_transform = mat4.create();
-    let world_pos = vec3.create();
+    let world_transform = glMatrix.mat4.create();
+    let world_pos = glMatrix.vec3.create();
     let comp_rot = null;
 
     this_system.world.getEntities("Scale", "Pos", "Texture", "Texcoord").forEach(function(entity) {
@@ -173,14 +173,14 @@ const SystemRenderSprite = CES.System.extend({
 
       comp_rot = entity.getComponent("Rot");
       if(comp_rot) {
-        mat4.fromRotationTranslationScale(world_transform, comp_rot.rot, pos, scale);
+        glMatrix.mat4.fromRotationTranslationScale(world_transform, comp_rot.rot, pos, scale);
       }
       else {
-        mat4.fromRotationTranslationScale(world_transform, IDENTITY_QUAT, pos, scale);
+        glMatrix.mat4.fromRotationTranslationScale(world_transform, IDENTITY_QUAT, pos, scale);
       }
 
       for(let i = 0; i < 4; ++i) {
-        vec3.transformMat4(world_pos, QUAD_LOCAL_POS[i], world_transform);
+        glMatrix.vec3.transformMat4(world_pos, QUAD_LOCAL_POS[i], world_transform);
 
         BATCH_QUAD_XYZIUV[offset++] = world_pos[0];
         BATCH_QUAD_XYZIUV[offset++] = world_pos[1];

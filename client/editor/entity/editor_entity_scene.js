@@ -86,7 +86,7 @@ class EditorEntityScene extends Scene {
           .addNumberInput(edit_pos_data, "y", {label: "Y"})
           .addNumberInput(edit_pos_data, "z", {label: "Z"})
           .addButton("Reload", function() {
-            entity.getComponent("Pos").pos = vec3.fromValues(edit_pos_data.x, edit_pos_data.y, edit_pos_data.z);
+            entity.getComponent("Pos").pos = glMatrix.vec3.fromValues(edit_pos_data.x, edit_pos_data.y, edit_pos_data.z);
           });
       }
     }).addButton("Rotation", function() {
@@ -100,7 +100,7 @@ class EditorEntityScene extends Scene {
           .addNumberInput(edit_rot_data, "y", {label: "Y Degree"})
           .addNumberInput(edit_rot_data, "z", {label: "Z Degree"})
           .addButton("Reload", function() {
-            quat.fromEuler(entity.getComponent("Rot").rot, edit_rot_data.x, edit_rot_data.y, edit_rot_data.z);
+            glMatrix.quat.fromEuler(entity.getComponent("Rot").rot, edit_rot_data.x, edit_rot_data.y, edit_rot_data.z);
           });
       }
     }).addButton("Scale", function() {
@@ -114,7 +114,7 @@ class EditorEntityScene extends Scene {
           .addNumberInput(edit_scale_data, "y", {label: "Y"})
           .addNumberInput(edit_scale_data, "z", {label: "Z"})
           .addButton("Reload", function() {
-            entity.getComponent("Scale").scale = vec3.fromValues(edit_scale_data.x, edit_scale_data.y, edit_scale_data.z);
+            entity.getComponent("Scale").scale = glMatrix.vec3.fromValues(edit_scale_data.x, edit_scale_data.y, edit_scale_data.z);
           });
       }
     }).addButton("Texcoord", function() {

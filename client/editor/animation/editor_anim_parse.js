@@ -30,10 +30,10 @@ function AnimationParse(json_text) {
       start: frame_info.total_duration,
       end: frame_info.total_duration + src_frame.duration * 0.001,
       rect: [
-        vec2.fromValues(left, top),
-        vec2.fromValues(right, top),
-        vec2.fromValues(left, bottom),
-        vec2.fromValues(right, bottom),
+        glMatrix.vec2.fromValues(left, top),
+        glMatrix.vec2.fromValues(right, top),
+        glMatrix.vec2.fromValues(left, bottom),
+        glMatrix.vec2.fromValues(right, bottom),
       ],
     };
     frame_info.total_duration += src_frame.duration * 0.001;

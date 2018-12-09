@@ -2,20 +2,20 @@
 
 const LIMIT_TEXTURE = 8; // iPhone 5s, Galaxy note 3.
 
-const IDENTITY_QUAT = quat.create();
+const IDENTITY_QUAT = glMatrix.quat.create();
 
 const EMPTY_TEXCOORD = [
-  vec2.fromValues(0.0, 1.0),
-  vec2.fromValues(1.0, 1.0),
-  vec2.fromValues(0.0, 0.0),
-  vec2.fromValues(1.0, 0.0),
+  glMatrix.vec2.fromValues(0.0, 1.0),
+  glMatrix.vec2.fromValues(1.0, 1.0),
+  glMatrix.vec2.fromValues(0.0, 0.0),
+  glMatrix.vec2.fromValues(1.0, 0.0),
 ];
 
 const QUAD_LOCAL_POS = [
-  vec3.fromValues(-0.5, 0.5, 0.0),
-  vec3.fromValues(0.5, 0.5, 0.0),
-  vec3.fromValues(-0.5, -0.5, 0.0),
-  vec3.fromValues(0.5, -0.5, 0.0),
+  glMatrix.vec3.fromValues(-0.5, 0.5, 0.0),
+  glMatrix.vec3.fromValues(0.5, 0.5, 0.0),
+  glMatrix.vec3.fromValues(-0.5, -0.5, 0.0),
+  glMatrix.vec3.fromValues(0.5, -0.5, 0.0),
 ];
 
 const NUM_BATCH = 130;

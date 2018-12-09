@@ -8,14 +8,14 @@ const SystemViewport = CES.System.extend({
     this.world.getEntities("Viewport").forEach(function(entity) {
       const viewport = entity.getComponent("Viewport");
 
-      vec3.add(viewport.target, viewport.pos, viewport.dir);
-      mat4.targetTo(viewport.transform_view, viewport.pos, viewport.target, viewport.up);
+      glMatrix.vec3.add(viewport.target, viewport.pos, viewport.dir);
+      glMatrix.mat4.targetTo(viewport.transform_view, viewport.pos, viewport.target, viewport.up);
 
       viewport.width = CANVAS_W;
       viewport.height = CANVAS_H;
-      mat4.ortho(viewport.transform_projection, -half_w, half_w, -half_h, half_h, viewport.z_near, viewport.z_far);
+      glMatrix.mat4.ortho(viewport.transform_projection, -half_w, half_w, -half_h, half_h, viewport.z_near, viewport.z_far);
 
-      mat4.multiply(viewport.transform_vp, viewport.transform_view, viewport.transform_projection);
+      glMatrix.mat4.multiply(viewport.transform_vp, viewport.transform_view, viewport.transform_projection);
     })
   },
 });
