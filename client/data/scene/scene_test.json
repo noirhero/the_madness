@@ -1,21 +1,12 @@
 {
- "anim_comp": {
-  "state": "idle",
-  "duration": 0,
-  "url": "data/animation/rossa.json"
- },
- "pos_comp": {
-  "x": 0,
-  "y": 0,
-  "z": 0
- },
- "scale_comp": {
-  "x": 100,
-  "y": 100,
-  "z": 100
- },
- "texcoord_comp": {},
- "texture_comp": {
-  "url": "data/animation/rossa.png"
- }
+ "systems": [
+   "animation",
+   "render_sprite",
+   "viewport",
+ ],
+ "entities": [
+   "data/entity_system.json",
+   "data/entity_rossa.json",
+ ],
+ "next": "data/scene/system_test.json",
 }

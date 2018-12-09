@@ -5,6 +5,12 @@ function EntityLoad(entity_obj) {
 
   const components = [];
 
+  (viewport_comp => {
+    if(viewport_comp) {
+      components[components.length] = new ComponentViewport();
+    }
+  })(entity_obj.viewport_comp);
+
   (scale_comp => {
     if(scale_comp) {
       components[components.length] = new ComponentScale(scale_comp.x, scale_comp.y, scale_comp.z);
