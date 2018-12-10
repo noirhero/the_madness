@@ -28,6 +28,8 @@ class GameScene extends Scene {
           }
         });
       });
+
+      this.next_scene_ = scene_data.next;
     });
   }
 }

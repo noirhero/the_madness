@@ -11,6 +11,12 @@ function EntityLoad(entity_obj) {
     }
   })(entity_obj.viewport_comp);
 
+  (mic_comp => {
+    if(mic_comp) {
+      components[components.length] = new ComponentMic();
+    }
+  })(entity_obj.mic_comp);
+
   (scale_comp => {
     if(scale_comp) {
       components[components.length] = new ComponentScale(scale_comp.x, scale_comp.y, scale_comp.z);

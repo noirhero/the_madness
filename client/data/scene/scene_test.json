@@ -8,5 +8,5 @@
    "data/entity_system.json",
    "data/entity_rossa.json"
  ],
- "next": "data/scene/system_test.json"
+ "next": "data/scene/scene_test.json"
 }
