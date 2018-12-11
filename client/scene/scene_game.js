@@ -18,6 +18,9 @@ class GameScene extends Scene {
         else if("viewport" == system_text) {
           world.addSystem(new SystemViewport());
         }
+        else if("record" == system_text) {
+          world.addSystem(new SystemRecordKeyboard());
+        }
       });
 
       scene_data.entities.forEach(entity_url => {
