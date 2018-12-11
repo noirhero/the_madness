@@ -18,7 +18,7 @@ const ComponentMic = CES.Component.extend({
     navigator.getUserMedia({
       audio: true,
     }, stream => {
-      this.recoder = new Recorder(audio_context.createMediaStreamSource(stream));
+      this.recorder = new Recorder(audio_context.createMediaStreamSource(stream));
     }, err => {
       alert("No live audio input : " + err);
     });
