@@ -2,12 +2,15 @@
 
 const SystemRecordKeyboard = CES.System.extend({
   init: function() {
+    this.is_exporting = false;
     this.is_press = false;
     this.stop_timer = null;
 
     document.addEventListener("keydown", event => {
       if("Space" == event.code) {
-        this.is_press = true;
+        if(false === event.repeat) {
+          this.is_press = true;
+        }
         event.preventDefault();
       }
     }, false);
@@ -17,7 +20,7 @@ const SystemRecordKeyboard = CES.System.extend({
         this.is_press = false;
         event.preventDefault();
       }
-    }, false);
+    });
   },
   update: function() {
     function StopRecord(mic_comp) {
@@ -25,16 +28,21 @@ const SystemRecordKeyboard = CES.System.extend({
         return;
       }
 
+      console.log("Stop record");
+
       if(this.stop_timer) {
-        console.log("StopTimer");
         clearTimeout(this.stop_timer);
         this.stop_timer = null;
+        this.is_press = false;
       }
 
       mic_comp.recorder.stop();
       mic_comp.recorder.exportWAV(blob => {
         mic_comp.is_recording = false;
+        this.is_exporting = false;
       });
+
+      this.is_exporting = true;
     }
 
     function StartRecord(mic_comp) {
@@ -42,14 +50,18 @@ const SystemRecordKeyboard = CES.System.extend({
         return;
       }
 
-      console.log("StartRecoder");
+      console.log("Start record");
 
       mic_comp.is_recording = true;
       mic_comp.recorder.record();
 
       this.stop_timer = setTimeout(() => {
         StopRecord.call(this, mic_comp);
-      }, 3000);
+      }, 1000);
+    }
+
+    if(true === this.is_exporting) {
+      return;
     }
 
     this.world.getEntities("Mic").forEach(entity => {
