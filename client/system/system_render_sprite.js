@@ -146,8 +146,6 @@ const SystemRenderSprite = CES.System.extend({
         return;
       }
 
-      ++num_draw;
-
       let texture_index = null;
       let num_bind_textures = bind_textures.length;
       for(let bi = 0; bi < num_bind_textures; ++bi) {
@@ -160,6 +158,7 @@ const SystemRenderSprite = CES.System.extend({
       if(null === texture_index) {
         if(LIMIT_TEXTURE <= num_bind_textures) {
           Draw();
+          num_bind_textures = 0;
         }
 
         bind_textures[num_bind_textures] = current_texture;
@@ -189,6 +188,8 @@ const SystemRenderSprite = CES.System.extend({
         BATCH_QUAD_XYZIUV[offset++] = texcoord[i][1];
         BATCH_QUAD_XYZIUV[offset++] = texture_index;
       }
+
+      ++num_draw;
 
       if(num_max_offset <= offset) {
         Draw();
