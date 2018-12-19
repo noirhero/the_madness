@@ -7,6 +7,12 @@
          "id":1,
          "name":"background",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"z",
+                 "type":"float",
+                 "value":100
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":80,
@@ -19,6 +25,12 @@
          "id":2,
          "name":"floor",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"z",
+                 "type":"float",
+                 "value":90
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":80,
@@ -31,6 +43,12 @@
          "id":4,
          "name":"ceiling",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"z",
+                 "type":"float",
+                 "value":80
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":80,
@@ -43,6 +61,12 @@
          "id":7,
          "name":"object",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"z",
+                 "type":"float",
+                 "value":70
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":80,
@@ -55,6 +79,12 @@
          "id":5,
          "name":"pillar",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"z",
+                 "type":"float",
+                 "value":-10
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":80,
@@ -67,6 +97,12 @@
          "id":6,
          "name":"foreground",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"z",
+                 "type":"float",
+                 "value":-20
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":80,
