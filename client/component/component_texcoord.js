@@ -2,7 +2,7 @@
 
 const ComponentTexcoord = CES.Component.extend({
   name: "Texcoord",
-  init: function() {
-    this.values = EMPTY_TEXCOORD;
+  init: function(values) {
+    this.values = values || EMPTY_TEXCOORD;
   }
 });

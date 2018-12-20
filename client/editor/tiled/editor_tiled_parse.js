@@ -1,6 +1,6 @@
 // Copyright 2018 TAP, Inc. All Rights Reserved.
 
-function GenerateEntity(world, tile, tileset, x, y, z, w, h) {
+function GenerateEntity(world, tile, tileset, x, y, z) {
   "use strict";
 
   const entity = new CES.Entity();
@@ -20,7 +20,21 @@ function GenerateEntity(world, tile, tileset, x, y, z, w, h) {
     });
   }
   else {
+    const i = tile - tileset.firstgid;
+    const tw = tileset.tilewidth / tileset.imagewidth;
+    const th = tileset.tileheight / tileset.imageheight;
+    const tx = Math.floor(i % tileset.columns) * tw;
+    const ty = 1 - Math.floor(i / tileset.columns) * th;
 
+    entity.addComponent(new ComponentPos(x + tileset.tilewidth / 2, y + tileset.tileheight / 2, z));
+    entity.addComponent(new ComponentScale(tileset.tilewidth, tileset.tileheight));
+    entity.addComponent(new ComponentTexture("../../data/tiled/" + tileset.image));
+    entity.addComponent(new ComponentTexcoord([
+      glMatrix.vec2.fromValues(tx, ty),
+      glMatrix.vec2.fromValues(tx + tw, ty),
+      glMatrix.vec2.fromValues(tx, ty - th),
+      glMatrix.vec2.fromValues(tx + tw, ty - th),
+    ]));
   }
 
   world.addEntity(entity);
@@ -34,14 +48,16 @@ function TiledParse(world, json_text) {
   data.layers.forEach(layer => {
     let i = 0;
     let z = 0;
-    layer.properties.some(property => {
-      if("z" != property.name) {
-        return false;
-      }
+    if(layer.properties) {
+      layer.properties.some(property => {
+        if("z" != property.name) {
+          return false;
+        }
 
-      z = property.value;
-      return true;
-    });
+        z = property.value;
+        return true;
+      });
+    }
 
     layer.data.forEach(tile => {
       if(0 === tile) {
@@ -54,12 +70,12 @@ function TiledParse(world, json_text) {
       ++i;
 
       data.tilesets.forEach(tileset => {
-        const end_grid = tileset.firstgrid + tileset.tilecount - 1;
-        if(tileset.firstgrid > tile || end_grid < tile) {
+        const end_grid = tileset.firstgid + tileset.tilecount - 1;
+        if(tileset.firstgid > tile || end_grid < tile) {
           return;
         }
 
-        GenerateEntity(world, tile, tileset, x, y, z, data.tilewidth, data.tileheight);
+        GenerateEntity(world, tile, tileset, x, y, z);
       });
     });
   });
