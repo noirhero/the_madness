@@ -183,7 +183,8 @@ const SystemRenderSprite = CES.System.extend({
 
         BATCH_QUAD_XYZIUV[offset++] = world_pos[0];
         BATCH_QUAD_XYZIUV[offset++] = world_pos[1];
-        BATCH_QUAD_XYZIUV[offset++] = (0 === pos[2]) ? world_transform[13] : pos[2];
+        //BATCH_QUAD_XYZIUV[offset++] = (0 === pos[2]) ? world_transform[13] : pos[2];
+        BATCH_QUAD_XYZIUV[offset++] = pos[2];
         BATCH_QUAD_XYZIUV[offset++] = texcoord[i][0];
         BATCH_QUAD_XYZIUV[offset++] = texcoord[i][1];
         BATCH_QUAD_XYZIUV[offset++] = texture_index;
