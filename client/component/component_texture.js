@@ -8,6 +8,7 @@ const ComponentTexture = CES.Component.extend({
       TEXTURES[url] = texture = new Texture(url);
     }
 
+    this.url = url;
     this.texture = texture;
   },
 });

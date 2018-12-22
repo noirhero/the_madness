@@ -97,6 +97,25 @@ function ObjectLayerParse(world, data, layer) {
       world.addEntity(entity);
     });
   }
+  else if("bgm" == layer.name) {
+    layer.objects.forEach(object => {
+      const entity = new CES.Entity();
+      entity.addComponent(new ComponentPos(object.x + object.width * 0.5, object.y - object.height * 0.5));
+      entity.addComponent(new ComponentScale(object.width, object.height));
+      entity.addComponent(new ComponentBouding());
+
+      if(object.properties) {
+        object.properties.some(property => {
+          if("file" == property.name) {
+            entity.addComponent(new ComponentSound(property.value));
+            return true;
+          }
+          return false;
+        });
+      }
+      world.addEntity(entity);
+    });
+  }
 }
 
 function TiledParse(world, json_text) {

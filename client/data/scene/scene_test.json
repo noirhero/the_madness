@@ -9,5 +9,6 @@
    "data/entity_system.json",
    "data/entity_rossa.json"
  ],
+ "tiled": "data/tiled_madness.json",
  "next": "data/scene/scene_test.json"
 }

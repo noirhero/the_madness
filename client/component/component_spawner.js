@@ -3,6 +3,6 @@
 const ComponentSpawner = CES.Component.extend({
   name: "Spawner",
   init: function(name) {
-    this.name = name || "None";
+    this.type = name || "None";
   },
 });

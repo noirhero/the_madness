@@ -32,43 +32,157 @@ class EditorTiledScene extends Scene {
     const camera_pos_system = this.camera_pos_system_;
     const player_entity = this.entity_;
 
+    const tiled_obj = {
+      prev_offset_x: 0,
+      offset_x: 0,
+      prev_offset_y: 0,
+      offset_y: 0,
+      prev_scale_x: 1,
+      scale_x: 1,
+      prev_scale_y: 1,
+      scale_y: 1,
+    };
     controlKit.addPanel({
       fixed: false,
       label: "Tiled",
-    }).addButton("LOAD", () => {
-      const element_load = document.createElement("load");
-      element_load.innerHTML = "<input type=\"file\" accept=\".json\">";
-
-      const dialog = element_load.firstChild;
-      dialog.addEventListener("change", () => {
-        const file = dialog.files[0];
-        if (file.name.match(/.json/i)) {
-          world.name = file.name;
-
-          world.getEntities().forEach(entity => {
-            world.removeEntity(entity);
+    })
+      .addSubGroup({
+        label: "Offset",
+      }).addNumberInput(tiled_obj, "offset_x", {
+        onChange: number => {
+          world.getEntities("Pos").forEach(entity => {
+            const pos = entity.getComponent("Pos").pos;
+            pos[0] -= tiled_obj.prev_offset_x;
+            pos[0] += number;
           });
-          world.addEntity(player_entity);
+          tiled_obj.prev_offset_x = number;
+        },
+      }).addNumberInput(tiled_obj, "offset_y", {
+        onChange: number => {
+          world.getEntities("Pos").forEach(entity => {
+            const pos = entity.getComponent("Pos").pos;
+            pos[1] -= tiled_obj.prev_offset_y;
+            pos[1] += number;
+          });
+          tiled_obj.prev_offset_y = number;
+        },
+      }).addNumberInput(tiled_obj, "scale_x", {
+        onChange: number => {
+          if(0 === number) {
+            return;
+          }
 
-          const reader = new FileReader();
-          reader.onload = event => {
-            TiledParse(world, event.target.result);
-          };
-          reader.readAsText(file);
-        }
-        else {
-          alert("File not supported, .json files only");
-        }
+          world.getEntities("Scale").forEach(entity => {
+            if(player_entity === entity) {
+              return;
+            }
+
+            const scale = entity.getComponent("Scale").scale;
+            scale[0] *= 1 / tiled_obj.prev_scale_x;
+            scale[0] *= number;
+          });
+          tiled_obj.prev_scale_x = number;
+        },
+      }).addNumberInput(tiled_obj, "scale_y", {
+        onChange: number => {
+          if(0 === number) {
+            return;
+          }
+
+          world.getEntities("Scale").forEach(entity => {
+            if(player_entity === entity) {
+              return;
+            }
+
+            const scale = entity.getComponent("Scale").scale;
+            scale[1] *= 1 / tiled_obj.prev_scale_y;
+            scale[1] *= number;
+          });
+          tiled_obj.prev_scale_y = number;
+        },
+      })
+      .addSubGroup({
+        label: "File",
+      }).addButton("LOAD", () => {
+        const element_load = document.createElement("load");
+        element_load.innerHTML = "<input type=\"file\" accept=\".json\">";
+
+        const dialog = element_load.firstChild;
+        dialog.addEventListener("change", () => {
+          const file = dialog.files[0];
+          if (file.name.match(/.json/i)) {
+            world.name = file.name;
+
+            world.getEntities().forEach(entity => {
+              world.removeEntity(entity);
+            });
+            world.addEntity(player_entity);
+
+            const reader = new FileReader();
+            reader.onload = event => {
+              TiledParse(world, event.target.result);
+            };
+            reader.readAsText(file);
+          }
+          else {
+            alert("File not supported, .json files only");
+          }
+        });
+        dialog.click();
+      }).addButton("SAVE", () => {
+        const entity_datas = [];
+        world.getEntities().forEach(entity => {
+          if(player_entity === entity) {
+            return;
+          }
+
+          const entity_data = {};
+          if(entity.getComponent("Pos")) {
+            const pos = entity.getComponent("Pos").pos;
+            entity_data.pos_comp = {
+              x: pos[0], y: pos[1], z: pos[2],
+            };
+          }
+          if(entity.getComponent("Scale")) {
+            const scale = entity.getComponent("Scale").scale;
+            entity_data.scale_comp = {
+              x: scale[0], y: scale[1], z: scale[2],
+            };
+          }
+          if(entity.getComponent("Texcoord")) {
+            entity_data.texcoord_comp = {};
+          }
+          if(entity.getComponent("Texture")) {
+            const url = entity.getComponent("Texture").url;
+            entity_data.texture_comp = {
+              url: url.slice(url.indexOf("data")),
+            };
+          }
+          if(entity.getComponent("Bounding")) {
+            entity_data.bouding_comp = {
+              type: entity.getComponent("Bounding").type,
+            };
+          }
+          if(entity.getComponent("Spawner")) {
+            entity_data.spawner_comp = {
+              type: entity.getComponent("Spawner").type,
+            };
+          }
+          if(entity.getComponent("Sound")) {
+            entity_data.sound_comp = {
+              file: entity.getComponent("Sound").file,
+            };
+          }
+          entity_datas[entity_datas.length] = entity_data;
+        });
+
+        const blob = new Blob([JSON.stringify(entity_datas, null, " ")], {type: "application/json"});
+
+        const element_save = document.createElement("a");
+        element_save.href = URL.createObjectURL(blob);
+        element_save.download = world.name;
+        element_save.click();
       });
-      dialog.click();
-    }).addButton("SAVE", () => {
-      // const blob = new Blob([JSON.stringify(save_data, null, " ")], {type: "application/json"});
-      //
-      // const element_save = document.createElement("a");
-      // element_save.href = URL.createObjectURL(blob);
-      // element_save.download = edit_data.name;
-      // element_save.click();
-    });
 
 
     const control_obj = {
