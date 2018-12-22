@@ -40,43 +40,76 @@ function GenerateEntity(world, tile, tileset, x, y, z) {
   world.addEntity(entity);
 }
 
+function TileLayerParse(world, data, layer) {
+  "use strict";
+
+  let i = 0;
+  let z = 0;
+  if(layer.properties) {
+    layer.properties.some(property => {
+      if("z" != property.name) {
+        return false;
+      }
+
+      z = property.value;
+      return true;
+    });
+  }
+
+  layer.data.forEach(tile => {
+    if(0 === tile) {
+      ++i;
+      return;
+    }
+
+    const x = Math.floor(i % data.width) * data.tilewidth;
+    const y = (data.height * data.tileheight) - Math.floor(i / data.width) * data.tileheight;
+    ++i;
+
+    data.tilesets.forEach(tileset => {
+      const end_grid = tileset.firstgid + tileset.tilecount - 1;
+      if(tileset.firstgid > tile || end_grid < tile) {
+        return;
+      }
+
+      GenerateEntity(world, tile, tileset, x, y, z);
+    });
+  });
+}
+
+function ObjectLayerParse(world, data, layer) {
+  "use strict";
+
+  if("collision" == layer.name) {
+    layer.objects.forEach(object => {
+      const entity = new CES.Entity();
+      entity.addComponent(new ComponentPos(object.x + object.width * 0.5, object.y - object.height * 0.5));
+      entity.addComponent(new ComponentScale(object.width, object.height));
+      entity.addComponent(new ComponentBouding());
+      world.addEntity(entity);
+    });
+  }
+  else if("spawn" == layer.name) {
+    layer.objects.forEach(object => {
+      const entity = new CES.Entity();
+      entity.addComponent(new ComponentPos(object.x, object.y));
+      entity.addComponent(new ComponentSpawner(object.name));
+      world.addEntity(entity);
+    });
+  }
+}
+
 function TiledParse(world, json_text) {
   "use strict";
 
   const data = JSON.parse(json_text);
 
   data.layers.forEach(layer => {
-    let i = 0;
-    let z = 0;
-    if(layer.properties) {
-      layer.properties.some(property => {
-        if("z" != property.name) {
-          return false;
-        }
-
-        z = property.value;
-        return true;
-      });
+    if(layer.data) {
+      TileLayerParse(world, data, layer);
     }
-
-    layer.data.forEach(tile => {
-      if(0 === tile) {
-        ++i;
-        return;
-      }
-
-      const x = Math.floor(i % data.width) * data.tilewidth;
-      const y = (data.height * data.tileheight) - Math.floor(i / data.width) * data.tileheight;
-      ++i;
-
-      data.tilesets.forEach(tileset => {
-        const end_grid = tileset.firstgid + tileset.tilecount - 1;
-        if(tileset.firstgid > tile || end_grid < tile) {
-          return;
-        }
-
-        GenerateEntity(world, tile, tileset, x, y, z);
-      });
-    });
+    else if(layer.objects) {
+      ObjectLayerParse(world, data, layer);
+    }
   });
 }
