@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="80" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="80" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="16">
  <tileset firstgid="1" name="bg" tilewidth="256" tileheight="240" tilecount="5" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
@@ -198,4 +198,16 @@
 0,0,0,0,0,0,0,0,0,379,0,0,0,0,0,0,0,0,381,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,380,0,0,0,0,381,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="8" name="collision">
+  <object id="3" name="collision" x="-28.6667" y="-22" width="77.3333" height="292"/>
+  <object id="4" name="collision" x="1254.67" y="-17.3333" width="75.3333" height="286.667"/>
+ </objectgroup>
+ <objectgroup id="9" name="spawn">
+  <object id="14" name="player_start" x="87.8182" y="193.818">
+   <point/>
+  </object>
+  <object id="15" name="enemy_spawn" x="1219.25" y="193.375">
+   <point/>
+  </object>
+ </objectgroup>
 </map>
