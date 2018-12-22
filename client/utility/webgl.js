@@ -4,6 +4,7 @@ var CANVAS = null;
 var CANVAS_W = 0;
 var CANVAS_H = 0;
 var GL = null;
+var FRAME_DATAS = [];
 
 function WebGLInitialize() {
   function IgnoreEvent(event) {
@@ -30,12 +31,35 @@ function WebGLUpdate() {
   CANVAS_W = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
   CANVAS_H = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
-  if(CANVAS_W !== CANVAS.width) {
+  if(CANVAS_W !== CANVAS.width || CANVAS_H !== CANVAS.height) {
     CANVAS.width = CANVAS_W;
-  }
-
-  if(CANVAS_H !== CANVAS.height) {
     CANVAS.height = CANVAS_H;
+
+    for(let i in FRAME_DATAS) {
+      const frame_data = FRAME_DATAS[i];
+
+      const texture = GL.createTexture();
+      GL.activeTexture(GL.TEXTURE0);
+      GL.bindTexture(GL.TEXTURE_2D, texture);
+      GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA, CANVAS_W, CANVAS_H, 0, GL.RGBA, GL.UNSIGNED_BYTE, null);
+      GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR);
+      GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
+      GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.CLAMP_TO_EDGE);
+
+      GL.bindFramebuffer(GL.FRAMEBUFFER, frame_data.frame_buffer);
+      GL.framebufferTexture2D(GL.FRAMEBUFFER, GL.COLOR_ATTACHMENT0, GL.TEXTURE_2D, texture, 0);
+
+      const depth_buffer = GL.createRenderbuffer();
+      GL.bindRenderbuffer(GL.RENDERBUFFER, depth_buffer);
+      GL.renderbufferStorage(GL.RENDERBUFFER, GL.DEPTH_COMPONENT16, CANVAS_W, CANVAS_H);
+      GL.framebufferRenderbuffer(GL.FRAMEBUFFER, GL.DEPTH_ATTACHMENT, GL.RENDERBUFFER, depth_buffer);
+      GL.bindRenderbuffer(GL.RENDERBUFFER, null);
+
+      GL.bindFramebuffer(GL.FRAMEBUFFER, null);
+
+      frame_data.texture = texture;
+      frame_data.depth_buffer = depth_buffer;
+    }
   }
 }
 
@@ -72,4 +96,39 @@ function WebGLCreateBuffer(target, src, usage) {
   GL.bufferData(target, src, usage);
 
   return buffer;
+}
+
+function WebGLCreateFrameData(index) {
+  "use strict";
+
+  const frame_data = (() => {
+    const texture = GL.createTexture();
+    GL.activeTexture(GL.TEXTURE0);
+    GL.bindTexture(GL.TEXTURE_2D, texture);
+    GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA, CANVAS_W, CANVAS_H, 0, GL.RGBA, GL.UNSIGNED_BYTE, null);
+    GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR);
+    GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
+    GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.CLAMP_TO_EDGE);
+
+    const frame_buffer = GL.createFramebuffer();
+    GL.bindFramebuffer(GL.FRAMEBUFFER, frame_buffer);
+    GL.framebufferTexture2D(GL.FRAMEBUFFER, GL.COLOR_ATTACHMENT0, GL.TEXTURE_2D, texture, 0);
+
+    const depth_buffer = GL.createRenderbuffer();
+    GL.bindRenderbuffer(GL.RENDERBUFFER, depth_buffer);
+    GL.renderbufferStorage(GL.RENDERBUFFER, GL.DEPTH_COMPONENT16, CANVAS_W, CANVAS_H);
+    GL.framebufferRenderbuffer(GL.FRAMEBUFFER, GL.DEPTH_ATTACHMENT, GL.RENDERBUFFER, depth_buffer);
+    GL.bindRenderbuffer(GL.RENDERBUFFER, null);
+
+    GL.bindFramebuffer(GL.FRAMEBUFFER, null);
+
+    return {
+      texture: texture,
+      frame_buffer: frame_buffer,
+      depth_buffer: depth_buffer
+    };
+  })();
+
+  FRAME_DATAS[index] = frame_data;
+  return frame_data;
 }
