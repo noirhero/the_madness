@@ -31,6 +31,10 @@ impl ws::Factory for Server {
   type Handler = EchoHandler;
 
   fn connection_made(&mut self, sender: ws::Sender) -> EchoHandler {
+    println!("Connection : {}", sender.connection_id());
+
+    sender.send(format!("Connect:{}", sender.connection_id())).unwrap();
+
     SENDERS.lock().unwrap().push(sender.clone());
     EchoHandler{
       me: sender,
@@ -38,7 +42,11 @@ impl ws::Factory for Server {
   }
 
   fn connection_lost(&mut self, handler: EchoHandler) {
+    println!("Disconnect : {}", handler.me.connection_id());
+
     SENDERS.lock().unwrap().retain(|ref sender| {
+      sender.send(format!("Disconnect:{}", handler.me.connection_id())).unwrap();
+
       handler.me.ne(sender)
     });
   }
