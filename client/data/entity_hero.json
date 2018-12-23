@@ -1,0 +1,21 @@
+{
+ "anim_comp": {
+  "state": "idle",
+  "duration": 0,
+  "url": "data/animation/hero.json"
+ },
+ "pos_comp": {
+  "x": 0,
+  "y": 0,
+  "z": 0
+ },
+ "scale_comp": {
+  "x": 60,
+  "y": 100,
+  "z": 1
+ },
+ "texcoord_comp": {},
+ "texture_comp": {
+  "url": "data/animation/hero.png"
+ }
+}
