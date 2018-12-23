@@ -17,6 +17,12 @@ function EntityLoad(entity_obj) {
     }
   })(entity_obj.mic_comp);
 
+  (websocket_comp => {
+    if(websocket_comp) {
+      components[components.length] = new ComponentWebsocket();
+    }
+  })(entity_obj.websocket_comp);
+
   (scale_comp => {
     if(scale_comp) {
       components[components.length] = new ComponentScale(scale_comp.x, scale_comp.y, scale_comp.z);

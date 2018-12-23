@@ -24,6 +24,12 @@ class GameScene extends Scene {
         else if("spawn" == system_text) {
           world.addSystem(new SystemSpawn());
         }
+        else if("spawn_player" == system_text) {
+          world.addSystem(new SystemSpawnPlayer());
+        }
+        else if("websocket" == system_text) {
+          world.addSystem(new SystemWebsocket());
+        }
       });
 
       scene_data.entities.forEach(entity_url => {

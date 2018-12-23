@@ -57,5 +57,6 @@ impl ws::Factory for Server {
 }
 
 fn main() {
-  ws::WebSocket::new(Server {}).unwrap().listen("localhost:8989").unwrap();
+  //ws::WebSocket::new(Server {}).unwrap().listen("localhost:8989").unwrap();
+  ws::WebSocket::new(Server {}).unwrap().listen("192.168.219.126:8989").unwrap();
 }

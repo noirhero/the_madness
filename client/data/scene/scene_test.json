@@ -4,7 +4,9 @@
    "render_sprite",
    "viewport",
    "record",
-   "spawn"
+   "spawn",
+   "spawn_player",
+   "websocket"
  ],
  "entities": [
    "data/entity_system.json"
