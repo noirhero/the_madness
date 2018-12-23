@@ -207,10 +207,13 @@
    <point/>
   </object>
   <object id="15" name="enemy_spawn" x="1219.25" y="193.375">
+   <properties>
+    <property name="entity" value="entity_mummy"/>
+   </properties>
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="10" name="bgm">
+ <objectgroup id="10" name="bgm" locked="1">
   <object id="17" name="bgm" x="-78" y="-82" width="1468" height="382">
    <properties>
     <property name="file" value="quiet_hill"/>

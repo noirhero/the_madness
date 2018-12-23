@@ -164,6 +164,12 @@
                  "id":15,
                  "name":"enemy_spawn",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"entity",
+                         "type":"string",
+                         "value":"entity_mummy"
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
