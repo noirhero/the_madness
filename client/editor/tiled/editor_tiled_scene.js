@@ -151,6 +151,9 @@ class EditorTiledScene extends Scene {
           }
           if(entity.getComponent("Texcoord")) {
             entity_data.texcoord_comp = {};
+            if(EMPTY_TEXCOORD !== entity.getComponent("Texcoord").values) {
+              entity_data.texcoord_comp.values = entity.getComponent("Texcoord").values;
+            }
           }
           if(entity.getComponent("Texture")) {
             const url = entity.getComponent("Texture").url;

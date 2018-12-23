@@ -37,7 +37,18 @@ function EntityLoad(entity_obj) {
 
   (texcoord_comp => {
     if(texcoord_comp) {
-      components[components.length] = new ComponentTexcoord();
+      const values = texcoord_comp.values;
+      if(values) {
+        components[components.length] = new ComponentTexcoord([
+          glMatrix.vec2.fromValues(values[0][0], values[0][1]),
+          glMatrix.vec2.fromValues(values[1][0], values[1][1]),
+          glMatrix.vec2.fromValues(values[2][0], values[2][1]),
+          glMatrix.vec2.fromValues(values[3][0], values[3][1]),
+        ]);
+      }
+      else {
+        components[components.length] = new ComponentTexcoord();
+      }
     }
   })(entity_obj.texcoord_comp);
 
@@ -57,6 +68,24 @@ function EntityLoad(entity_obj) {
     component.duration = anim_comp.duration;
     components[components.length] = component;
   })(entity_obj.anim_comp);
+
+  (bounding_comp => {
+    if(bounding_comp) {
+      components[components.length] = new ComponentBouding(bounding_comp.type);
+    }
+  })(entity_obj.bounding_comp);
+
+  (sound_comp => {
+    if(sound_comp) {
+      components[components.length] = new ComponentSound(sound_comp.file);
+    }
+  })(entity_obj.sound_comp);
+
+  (spawner_comp => {
+    if(spawner_comp) {
+      components[components.length] = new ComponentSpawner(spawner_comp.type);
+    }
+  })(entity_obj.spawner_comp);
 
   const num_components = components.length;
   if(0 === num_components) {

@@ -32,6 +32,12 @@ class GameScene extends Scene {
         });
       });
 
+      if(scene_data.tiled) {
+        ReadFile(scene_data.tiled, tiled_scene_text => {
+          SceneTiledLoad(world, JSON.parse(tiled_scene_text));
+        });
+      }
+
       this.next_scene_ = scene_data.next;
     });
   }
