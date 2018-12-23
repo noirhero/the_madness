@@ -3,11 +3,11 @@
    "animation",
    "render_sprite",
    "viewport",
-   "record"
+   "record",
+   "spawn"
  ],
  "entities": [
-   "data/entity_system.json",
-   "data/entity_rossa.json"
+   "data/entity_system.json"
  ],
  "tiled": "data/tiled_madness.json",
  "next": "data/scene/scene_test.json"

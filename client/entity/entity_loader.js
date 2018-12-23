@@ -83,7 +83,7 @@ function EntityLoad(entity_obj) {
 
   (spawner_comp => {
     if(spawner_comp) {
-      components[components.length] = new ComponentSpawner(spawner_comp.type);
+      components[components.length] = new ComponentSpawner(spawner_comp.type, spawner_comp.entity_name);
     }
   })(entity_obj.spawner_comp);
 

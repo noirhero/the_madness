@@ -169,6 +169,7 @@ class EditorTiledScene extends Scene {
           if(entity.getComponent("Spawner")) {
             entity_data.spawner_comp = {
               type: entity.getComponent("Spawner").type,
+              entity_name: entity.getComponent("Spawner").entity_name,
             };
           }
           if(entity.getComponent("Sound")) {

@@ -21,6 +21,9 @@ class GameScene extends Scene {
         else if("record" == system_text) {
           world.addSystem(new SystemRecordKeyboard());
         }
+        else if("spawn" == system_text) {
+          world.addSystem(new SystemSpawn());
+        }
       });
 
       scene_data.entities.forEach(entity_url => {

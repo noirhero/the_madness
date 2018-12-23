@@ -91,9 +91,20 @@ function ObjectLayerParse(world, data, layer) {
   }
   else if("spawn" == layer.name) {
     layer.objects.forEach(object => {
+      let entity_name = null;
+      if(object.properties) {
+        object.properties.some(property => {
+          if("entity" == property.name) {
+            entity_name = property.value;
+            return true;
+          }
+          return false;
+        });
+      }
+
       const entity = new CES.Entity();
       entity.addComponent(new ComponentPos(object.x, object.y));
-      entity.addComponent(new ComponentSpawner(object.name));
+      entity.addComponent(new ComponentSpawner(object.name, entity_name));
       world.addEntity(entity);
     });
   }
