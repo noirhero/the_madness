@@ -38,3 +38,17 @@ const BATCH_QUAD_I = function() {
   }
   return indices;
 }();
+
+//const LINE_QUAD_XY = new Float32Array([-0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5]);
+const LINE_QUAD_XY = new Float32Array([-10.5, 10.5, 10.5, 10.5, -10.5, -10.5, 10.5, -10.5]);
+const LINE_SPHERE_XY = ((segment) => {
+  const offset = glMatrix.glMatrix.toRadian(360 / segment);
+
+  const vertices = new Float32Array(2/*xy*/ * segment);
+  for(let i = 0; i < segment; ++i) {
+    const radian = offset * i;
+    vertices[i * 2] = Math.sin(radian);
+    vertices[i * 2 + 1] = Math.cos(radian);
+  }
+  return vertices;
+})(16);

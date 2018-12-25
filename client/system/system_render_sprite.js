@@ -77,6 +77,7 @@ const SystemRenderSprite = CES.System.extend({
 
         GL.enableVertexAttribArray(0);
         GL.enableVertexAttribArray(1);
+        GL.enableVertexAttribArray(2);
 
         GL.viewport(0, 0, viewport.width, viewport.height);
         GL.enable(GL.DEPTH_TEST);
@@ -86,7 +87,6 @@ const SystemRenderSprite = CES.System.extend({
         GL.uniformMatrix4fv(this_system.u_vp_transform, false, viewport.transform_vp);
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this_system.ib);
         GL.bindBuffer(GL.ARRAY_BUFFER, this_system.vb);
-        GL.enableVertexAttribArray(2);
         GL.vertexAttribPointer(this_system.a_world_pos, 3, GL.FLOAT, false, 24, 0);
         GL.vertexAttribPointer(this_system.a_tex_coord, 2, GL.FLOAT, false, 24, 12);
         GL.vertexAttribPointer(this_system.a_tex_index, 1, GL.FLOAT, false, 24, 20);
