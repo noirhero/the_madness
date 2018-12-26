@@ -63,7 +63,7 @@ function TileLayerParse(world, data, layer) {
     }
 
     const x = Math.floor(i % data.width) * data.tilewidth;
-    const y = (data.height * data.tileheight) - Math.floor(i / data.width) * data.tileheight;
+    const y = (Math.max(1, data.height - 1) * data.tileheight) - Math.floor(i / data.width) * data.tileheight;
     ++i;
 
     data.tilesets.forEach(tileset => {
@@ -77,13 +77,13 @@ function TileLayerParse(world, data, layer) {
   });
 }
 
-function ObjectLayerParse(world, data, layer) {
+function ObjectLayerParse(world, data, layer, height) {
   "use strict";
 
   if("collision" == layer.name) {
     layer.objects.forEach(object => {
       const entity = new CES.Entity();
-      entity.addComponent(new ComponentPos(object.x + object.width * 0.5, object.y - object.height * 0.5));
+      entity.addComponent(new ComponentPos(object.x + object.width * 0.5, height - object.y - object.height / 2));
       entity.addComponent(new ComponentScale(object.width, object.height));
       entity.addComponent(new ComponentBouding());
       world.addEntity(entity);
@@ -103,7 +103,7 @@ function ObjectLayerParse(world, data, layer) {
       }
 
       const entity = new CES.Entity();
-      entity.addComponent(new ComponentPos(object.x, object.y));
+      entity.addComponent(new ComponentPos(object.x, height - object.y));
       entity.addComponent(new ComponentSpawner(object.name, entity_name));
       world.addEntity(entity);
     });
@@ -111,7 +111,7 @@ function ObjectLayerParse(world, data, layer) {
   else if("bgm" == layer.name) {
     layer.objects.forEach(object => {
       const entity = new CES.Entity();
-      entity.addComponent(new ComponentPos(object.x + object.width * 0.5, object.y - object.height * 0.5));
+      entity.addComponent(new ComponentPos(object.x + object.width * 0.5, height - object.y - object.height / 2));
       entity.addComponent(new ComponentScale(object.width, object.height));
       entity.addComponent(new ComponentBouding());
 
@@ -139,7 +139,7 @@ function TiledParse(world, json_text) {
       TileLayerParse(world, data, layer);
     }
     else if(layer.objects) {
-      ObjectLayerParse(world, data, layer);
+      ObjectLayerParse(world, data, layer, data.tileheight * data.height);
     }
   });
 }

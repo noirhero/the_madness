@@ -58,6 +58,7 @@ class EditorTiledScene extends Scene {
           });
           tiled_obj.prev_offset_x = number;
         },
+        step: 10,
       }).addNumberInput(tiled_obj, "offset_y", {
         onChange: number => {
           world.getEntities("Pos").forEach(entity => {
@@ -67,6 +68,7 @@ class EditorTiledScene extends Scene {
           });
           tiled_obj.prev_offset_y = number;
         },
+        step: 10,
       }).addNumberInput(tiled_obj, "scale_x", {
         onChange: number => {
           if(0 === number) {
