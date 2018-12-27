@@ -31,6 +31,8 @@ class GameScene extends Scene {
           world.addSystem(new SystemWebsocket());
         }
       });
+      world.addSystem(new SystemMovementKeyboard());
+      world.addSystem(new SystemMovementAnim());
 
       scene_data.entities.forEach(entity_url => {
         ReadFile(entity_url, entity_text => {
