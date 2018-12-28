@@ -15,6 +15,8 @@ struct EchoHandler {
 
 impl ws::Handler for EchoHandler {
   fn on_message(&mut self, msg: ws::Message) -> ws::Result<()> {
+    println!("Receive : {}", msg);
+
     for ref i in SENDERS.lock().unwrap().iter() {
       if self.me.ne(i) {
         i.send(msg.clone()).unwrap();
