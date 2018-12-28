@@ -21543,7 +21543,7 @@
    "y": 292,
    "z": 1
   },
-  "bouding_comp": {
+  "bounding_comp": {
    "type": "BOX"
   }
  },
@@ -21558,7 +21558,7 @@
    "y": 286.6669921875,
    "z": 1
   },
-  "bouding_comp": {
+  "boudning_comp": {
    "type": "BOX"
   }
  },
@@ -21595,7 +21595,7 @@
    "y": 382,
    "z": 1
   },
-  "bouding_comp": {
+  "bounding_comp": {
    "type": "BOX"
   },
   "sound_comp": {

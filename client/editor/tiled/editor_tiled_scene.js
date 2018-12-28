@@ -165,7 +165,7 @@ class EditorTiledScene extends Scene {
             };
           }
           if(entity.getComponent("Bounding")) {
-            entity_data.bouding_comp = {
+            entity_data.bounding_comp = {
               type: entity.getComponent("Bounding").type,
             };
           }
