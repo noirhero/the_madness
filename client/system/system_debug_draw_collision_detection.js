@@ -1,6 +1,6 @@
 // Copyright 2018 TAP, Inc. All Rights Reserved.
 
-const SystemRenderTileObject = CES.System.extend({
+const SystemDebugDrawCollisionDetection = CES.System.extend({
   init: function() {
     const vs = WebGLCreateShader([
       "attribute vec2 local_pos;",
@@ -15,10 +15,8 @@ const SystemRenderTileObject = CES.System.extend({
     const fs = WebGLCreateShader([
       "precision mediump float;",
 
-      "uniform vec4 color;",
-
       "void main() {",
-      "  gl_FragColor = color;",
+      "  gl_FragColor = vec4(1, 0, 0, 1);",
       "}",
     ].join("\n"), GL.FRAGMENT_SHADER);
 
@@ -26,7 +24,6 @@ const SystemRenderTileObject = CES.System.extend({
 
     this.a_local_pos = GL.getAttribLocation(program, "local_pos");
     this.u_wvp_transform = GL.getUniformLocation(program, "wvp_transform");
-    this.u_color = GL.getUniformLocation(program, "color");
     this.program = program;
     this.vs = vs;
     this.fs = fs;
@@ -34,9 +31,6 @@ const SystemRenderTileObject = CES.System.extend({
     this.sphere_vb = WebGLCreateBuffer(GL.ARRAY_BUFFER, LINE_SPHERE_XY, GL.STATIC_DRAW);
     this.w_transform = glMatrix.mat4.create();
     this.wvp_transform = glMatrix.mat4.create();
-    this.spawner_color = glMatrix.vec4.fromValues(0.6, 1, 0.658, 1);
-    this.collision_color = glMatrix.vec4.fromValues(1, 0, 0, 1);
-    this.bgm_color = glMatrix.vec4.fromValues(1, 1, 0, 1);
   },
   update: function() {
     const viewport_entities = this.world.getEntities("Viewport");
@@ -54,10 +48,11 @@ const SystemRenderTileObject = CES.System.extend({
     GL.disableVertexAttribArray(1);
     GL.disableVertexAttribArray(2);
     GL.vertexAttribPointer(this.a_local_pos, 2, GL.FLOAT, false, 8, 0);
-    GL.uniform4fv(this.u_color, this.spawner_color);
 
-    this.world.getEntities("Spawner", "Pos").forEach(entity => {
-      glMatrix.mat4.fromRotationTranslationScale(transform_w, IDENTITY_QUAT, entity.getComponent("Pos").pos, [5, 5, 1]);
+    this.world.getEntities("Player").forEach(entity => {
+      const circle = entity.getComponent("Player").circle;
+
+      glMatrix.mat4.fromRotationTranslationScale(transform_w, IDENTITY_QUAT, [circle.pos.x, circle.pos.y, 0], [circle.r, circle.r, 1]);
       glMatrix.mat4.mul(transform_wvp, transform_vp, transform_w);
       GL.uniformMatrix4fv(u_wvp_transform, false, transform_wvp);
       GL.drawArrays(GL.LINE_LOOP, 0, LINE_SPHERE_XY.length / 2);
@@ -66,18 +61,15 @@ const SystemRenderTileObject = CES.System.extend({
     GL.bindBuffer(GL.ARRAY_BUFFER, this.box_vb);
     GL.vertexAttribPointer(this.a_local_pos, 2, GL.FLOAT, false, 8, 0);
 
-    this.world.getEntities("Pos", "Scale", "Bounding").forEach(entity => {
+    this.world.getEntities("Bounding", "Pos", "Scale").forEach(entity => {
+      const box = entity.getComponent("Bounding").data;
+      if(!box) {
+        return;
+      }
+
       glMatrix.mat4.fromRotationTranslationScale(transform_w, IDENTITY_QUAT, entity.getComponent("Pos").pos, entity.getComponent("Scale").scale);
       glMatrix.mat4.mul(transform_wvp, transform_vp, transform_w);
       GL.uniformMatrix4fv(u_wvp_transform, false, transform_wvp);
-
-      if(entity.getComponent("Sound")) {
-        GL.uniform4fv(this.u_color, this.bgm_color);
-      }
-      else {
-        GL.uniform4fv(this.u_color, this.collision_color);
-      }
-
       GL.drawArrays(GL.LINE_LOOP, 0, 4);
     });
   },

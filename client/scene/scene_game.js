@@ -32,6 +32,8 @@ class GameScene extends Scene {
         }
       });
       world.addSystem(new SystemMovementKeyboard());
+      world.addSystem(new SystemMovementCollisionDetection());
+      world.addSystem(new SystemDebugDrawCollisionDetection());
       world.addSystem(new SystemMovementAnim());
 
       scene_data.entities.forEach(entity_url => {

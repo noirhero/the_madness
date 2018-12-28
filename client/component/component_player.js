@@ -5,5 +5,6 @@ const ComponentPlayer = CES.Component.extend({
   init: function(id) {
     this.id = id;
     this.move_speed = 100;
+    this.circle = new SAT.Circle(null, 20);
   }
 });
