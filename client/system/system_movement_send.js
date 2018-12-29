@@ -8,7 +8,7 @@ const SystemMovementSend = CES.System.extend({
   update: function() {
     const now = Date.now();
     const delta = now - this.send_time;
-    if(334 > delta) {
+    if(200 > delta) {
       return;
     }
 
@@ -35,8 +35,8 @@ const SystemMovementSend = CES.System.extend({
 
     websocket_comp.socket.send(JSON.stringify({
       id: player_entites[0].getComponent("Player").id,
-      x: player_pos[0],
-      y: player_pos[1],
+      x: Math.floor(player_pos[0]),
+      y: Math.floor(player_pos[1]),
     }, null, " "));
     this.send_time = now;
     glMatrix.vec3.copy(this.send_pos, player_pos);

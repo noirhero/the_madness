@@ -35,7 +35,8 @@ class GameScene extends Scene {
       world.addSystem(new SystemMovementCollisionDetection());
       world.addSystem(new SystemMovementAnim());
       world.addSystem(new SystemMovementSend());
-      world.addSystem(new SystemDebugDrawCollisionDetection());
+      world.addSystem(new SystemMovementNetPlayer());
+      //world.addSystem(new SystemDebugDrawCollisionDetection());
 
       scene_data.entities.forEach(entity_url => {
         ReadFile(entity_url, entity_text => {

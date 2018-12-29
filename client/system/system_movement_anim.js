@@ -44,8 +44,8 @@ const SystemMovementAnim = CES.System.extend({
     });
 
     const net_player_memories = this.net_player_memories;
-    this.world.getEntities("PlayerNet", "Pos", "Rot", "Anim").forEach(entity => {
-      const net_player_id = entity.getComponent("PlayerNet").id;
+    this.world.getEntities("NetPlayer", "Pos", "Rot", "Anim").forEach(entity => {
+      const net_player_id = entity.getComponent("NetPlayer").id;
       if(!net_player_memories[net_player_id]) {
         net_player_memories[net_player_id] = {
           is_first: false,
