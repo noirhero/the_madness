@@ -26,6 +26,9 @@ const SystemWebsocket = CES.System.extend({
           else if(-1 !== event.data.indexOf("Disconnect:")) {
             websocket_comp.disconnect_buffer[websocket_comp.disconnect_buffer.length] = Number(event.data.slice(event.data.indexOf(":") + 1));
           }
+          else {
+            websocket_comp.sync_buffer[websocket_comp.sync_buffer.length] = JSON.parse(event.data);
+          }
         }
         else /*Is blob message.*/ {
           websocket_comp.blob_buffer[websocket_comp.blob_buffer.length] = event.data;

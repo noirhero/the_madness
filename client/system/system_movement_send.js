@@ -8,7 +8,7 @@ const SystemMovementSend = CES.System.extend({
   update: function() {
     const now = Date.now();
     const delta = now - this.send_time;
-    if(500 > delta) {
+    if(334 > delta) {
       return;
     }
 
