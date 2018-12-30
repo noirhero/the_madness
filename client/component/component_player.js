@@ -6,5 +6,6 @@ const ComponentPlayer = CES.Component.extend({
     this.id = id;
     this.move_speed = 100;
     this.circle = new SAT.Circle(null, 20);
+    this.bgm_comp = null;
   }
 });

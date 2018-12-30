@@ -4,5 +4,6 @@ const ComponentSound = CES.Component.extend({
   name: "Sound",
   init: function(file) {
     this.file = file;
+    this.data = null;
   },
 });
