@@ -119,12 +119,12 @@ function ObjectLayerParse(world, data, layer, height) {
         object.properties.some(property => {
           if("file" == property.name) {
             entity.addComponent(new ComponentSound(property.value));
+            world.addEntity(entity);
             return true;
           }
           return false;
         });
       }
-      world.addEntity(entity);
     });
   }
   else if("camera" == layer.name) {
@@ -135,6 +135,25 @@ function ObjectLayerParse(world, data, layer, height) {
       entity.addComponent(new ComponentBouding());
       entity.addComponent(new ComponentCamera(object.type));
       world.addEntity(entity);
+    });
+  }
+  else if("madness" == layer.name) {
+    layer.objects.forEach(object => {
+      const entity = new CES.Entity();
+      entity.addComponent(new ComponentPos(object.x + object.width * 0.5, height - object.y - object.height / 2));
+      entity.addComponent(new ComponentScale(object.width, object.height));
+      entity.addComponent(new ComponentBouding());
+
+      if(object.properties) {
+        object.properties.some(property => {
+          if("value" == property.name) {
+            entity.addComponent(new ComponentMadness(object.type, property.value));
+            world.addEntity(entity);
+            return true;
+          }
+          return false;
+        });
+      }
     });
   }
 }

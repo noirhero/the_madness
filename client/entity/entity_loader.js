@@ -105,6 +105,12 @@ function EntityLoad(entity_obj) {
     }
   })(entity_obj.camera_comp);
 
+  (madness_comp => {
+    if(madness_comp) {
+      components[components.length] = new ComponentMadness(madness_comp.type, madness_comp.value);
+    }
+  })(entity_obj.madness_comp);
+
   const num_components = components.length;
   if(0 === num_components) {
     return null;

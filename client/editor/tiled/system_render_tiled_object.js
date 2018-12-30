@@ -38,6 +38,7 @@ const SystemRenderTileObject = CES.System.extend({
     this.collision_color = glMatrix.vec4.fromValues(1, 0, 0, 1);
     this.bgm_color = glMatrix.vec4.fromValues(1, 1, 0, 1);
     this.camera_color = glMatrix.vec4.fromValues(1, 1, 1, 1);
+    this.madness_color = glMatrix.vec4.fromValues(0.71, 0.31, 1, 1);
   },
   update: function() {
     const viewport_entities = this.world.getEntities("Viewport");
@@ -88,6 +89,14 @@ const SystemRenderTileObject = CES.System.extend({
       glMatrix.mat4.mul(transform_wvp, transform_vp, transform_w);
       GL.uniformMatrix4fv(u_wvp_transform, false, transform_wvp);
       GL.uniform4fv(this.u_color, this.camera_color);
+      GL.drawArrays(GL.LINE_LOOP, 0, 4);
+    });
+
+    this.world.getEntities("Pos", "Scale", "Bounding", "Madness").forEach(entity => {
+      glMatrix.mat4.fromRotationTranslationScale(transform_w, IDENTITY_QUAT, entity.getComponent("Pos").pos, entity.getComponent("Scale").scale);
+      glMatrix.mat4.mul(transform_wvp, transform_vp, transform_w);
+      GL.uniformMatrix4fv(u_wvp_transform, false, transform_wvp);
+      GL.uniform4fv(this.u_color, this.madness_color);
       GL.drawArrays(GL.LINE_LOOP, 0, 4);
     });
   },

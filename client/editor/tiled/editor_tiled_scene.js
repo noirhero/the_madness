@@ -190,6 +190,12 @@ class EditorTiledScene extends Scene {
               type: entity.getComponent("Camera").type,
             };
           }
+          if(entity.getComponent("Madness")) {
+            entity_data.madness_comp = {
+              type: entity.getComponent("Madness").type,
+              value: entity.getComponent("Madness").value,
+            };
+          }
           entity_datas[entity_datas.length] = entity_data;
         });
 
