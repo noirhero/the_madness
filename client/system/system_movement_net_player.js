@@ -22,6 +22,7 @@ const SystemMovementNetPlayer = CES.System.extend({
           net_player_entity = entity;
           return true;
         }
+        return false;
       });
 
       if(!net_player_entity) {
@@ -29,13 +30,16 @@ const SystemMovementNetPlayer = CES.System.extend({
           const load_entity = EntityLoad(JSON.parse(entity_text));
           if(load_entity) {
             const pos_comp = load_entity.getComponent("Pos");
-            const scale_comp = load_entity.getComponent("Scale");
-            if(pos_comp && scale_comp) {
-              pos_comp.pos[0] = sync_pos[0];
-              pos_comp.pos[1] = sync_pos[1];
+            if(pos_comp) {
+              const pos = pos_comp.pos;
+              pos[0] = sync_pos[0];
+              pos[1] = sync_pos[1];
+              load_entity.addComponent(new ComponentPlayerNet(sync_id, glMatrix.vec3.fromValues(pos[0], pos[1], pos[2])));
+            }
+            else {
+              load_entity.addComponent(new ComponentPlayerNet(sync_id));
             }
 
-            load_entity.addComponent(new ComponentPlayerNet(sync_id, glMatrix.vec3.fromValues(pos_comp.pos[0], pos_comp.pos[1], pos_comp.pos[2])));
             this.world.addEntity(load_entity);
           }
         });
@@ -54,7 +58,7 @@ const SystemMovementNetPlayer = CES.System.extend({
 
       glMatrix.vec3.sub(this.direction, net_player_comp.net_pos, net_player_pos);
       const length = glMatrix.vec3.length(this.direction);
-      if(3 > length) {
+      if(1 > length) {
         return;
       }
 

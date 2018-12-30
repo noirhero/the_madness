@@ -21,7 +21,7 @@ const SystemMovementAnim = CES.System.extend({
       }
       else {
         const dist = glMatrix.vec3.distance(memory.pos, pos);
-        if(0.1 >= dist) {
+        if(1 > dist) {
           anim_comp.state = "idle";
         }
         else {
