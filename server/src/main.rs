@@ -15,8 +15,6 @@ struct EchoHandler {
 
 impl ws::Handler for EchoHandler {
   fn on_message(&mut self, msg: ws::Message) -> ws::Result<()> {
-    println!("Receive : {}", msg);
-
     for ref i in SENDERS.lock().unwrap().iter() {
       if self.me.ne(i) {
         i.send(msg.clone()).unwrap();
@@ -59,6 +57,6 @@ impl ws::Factory for Server {
 }
 
 fn main() {
-  ws::WebSocket::new(Server {}).unwrap().listen("localhost:8989").unwrap();
-  //ws::WebSocket::new(Server {}).unwrap().listen("192.168.219.126:8989").unwrap();
+  //ws::WebSocket::new(Server {}).unwrap().listen("localhost:8989").unwrap();
+  ws::WebSocket::new(Server {}).unwrap().listen("192.168.219.119:8989").unwrap();
 }
