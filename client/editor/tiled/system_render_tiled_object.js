@@ -37,6 +37,7 @@ const SystemRenderTileObject = CES.System.extend({
     this.spawner_color = glMatrix.vec4.fromValues(0.6, 1, 0.658, 1);
     this.collision_color = glMatrix.vec4.fromValues(1, 0, 0, 1);
     this.bgm_color = glMatrix.vec4.fromValues(1, 1, 0, 1);
+    this.camera_color = glMatrix.vec4.fromValues(1, 1, 1, 1);
   },
   update: function() {
     const viewport_entities = this.world.getEntities("Viewport");
@@ -66,18 +67,27 @@ const SystemRenderTileObject = CES.System.extend({
     GL.bindBuffer(GL.ARRAY_BUFFER, this.box_vb);
     GL.vertexAttribPointer(this.a_local_pos, 2, GL.FLOAT, false, 8, 0);
 
-    this.world.getEntities("Pos", "Scale", "Bounding").forEach(entity => {
+    this.world.getEntities("Pos", "Scale", "Obstacle").forEach(entity => {
       glMatrix.mat4.fromRotationTranslationScale(transform_w, IDENTITY_QUAT, entity.getComponent("Pos").pos, entity.getComponent("Scale").scale);
       glMatrix.mat4.mul(transform_wvp, transform_vp, transform_w);
       GL.uniformMatrix4fv(u_wvp_transform, false, transform_wvp);
+      GL.uniform4fv(this.u_color, this.collision_color);
+      GL.drawArrays(GL.LINE_LOOP, 0, 4);
+    });
 
-      if(entity.getComponent("Sound")) {
-        GL.uniform4fv(this.u_color, this.bgm_color);
-      }
-      else {
-        GL.uniform4fv(this.u_color, this.collision_color);
-      }
+    this.world.getEntities("Pos", "Scale", "Bounding", "Sound").forEach(entity => {
+      glMatrix.mat4.fromRotationTranslationScale(transform_w, IDENTITY_QUAT, entity.getComponent("Pos").pos, entity.getComponent("Scale").scale);
+      glMatrix.mat4.mul(transform_wvp, transform_vp, transform_w);
+      GL.uniformMatrix4fv(u_wvp_transform, false, transform_wvp);
+      GL.uniform4fv(this.u_color, this.bgm_color);
+      GL.drawArrays(GL.LINE_LOOP, 0, 4);
+    });
 
+    this.world.getEntities("Pos", "Scale", "Bounding", "Camera").forEach(entity => {
+      glMatrix.mat4.fromRotationTranslationScale(transform_w, IDENTITY_QUAT, entity.getComponent("Pos").pos, entity.getComponent("Scale").scale);
+      glMatrix.mat4.mul(transform_wvp, transform_vp, transform_w);
+      GL.uniformMatrix4fv(u_wvp_transform, false, transform_wvp);
+      GL.uniform4fv(this.u_color, this.camera_color);
       GL.drawArrays(GL.LINE_LOOP, 0, 4);
     });
   },

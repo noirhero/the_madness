@@ -180,6 +180,16 @@ class EditorTiledScene extends Scene {
               file: entity.getComponent("Sound").file,
             };
           }
+          if(entity.getComponent("Obstacle")) {
+            entity_data.obstacle_comp = {
+              type: entity.getComponent("Obstacle").type,
+            };
+          }
+          if(entity.getComponent("Camera")) {
+            entity_data.camera_comp = {
+              type: entity.getComponent("Camera").type,
+            };
+          }
           entity_datas[entity_datas.length] = entity_data;
         });
 

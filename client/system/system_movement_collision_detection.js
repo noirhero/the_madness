@@ -17,19 +17,15 @@ const SystemMovementCollisionDetection = CES.System.extend({
     player_circle.pos.x = player_pos[0];
     player_circle.pos.y = player_pos[1];
 
-    this.world.getEntities("Bounding", "Pos", "Scale").forEach(entity => {
-      if(entity.getComponent("Sound")) {
-        return;
-      }
-
-      const bounding_comp = entity.getComponent("Bounding")
-      if(!bounding_comp.data) {
+    this.world.getEntities("Obstacle", "Pos", "Scale").forEach(entity => {
+      const obstacle_comp = entity.getComponent("Obstacle")
+      if(!obstacle_comp.data) {
         const pos = entity.getComponent("Pos").pos;
         const scale = entity.getComponent("Scale").scale;
-        bounding_comp.data = new SAT.Box(new SAT.V(pos[0] - scale[0] * 0.5, pos[1] - scale[1] * 0.5), scale[0], scale[1]).toPolygon();
+        obstacle_comp.data = new SAT.Box(new SAT.V(pos[0] - scale[0] * 0.5, pos[1] - scale[1] * 0.5), scale[0], scale[1]).toPolygon();
       }
 
-      if(true === SAT.testPolygonCircle(bounding_comp.data, player_circle, response)) {
+      if(true === SAT.testPolygonCircle(obstacle_comp.data, player_circle, response)) {
         player_pos[0] += response.overlapV.x;
         player_pos[1] += response.overlapV.y;
 

@@ -1,6 +1,6 @@
 // Copyright 2018 TAP, Inc. All Rights Reserved.
 
-function GenerateEntity(world, tile, tileset, x, y, z) {
+function GenerateTileEntity(world, tile, tileset, x, y, z) {
   "use strict";
 
   const entity = new CES.Entity();
@@ -72,7 +72,7 @@ function TileLayerParse(world, data, layer) {
         return;
       }
 
-      GenerateEntity(world, tile, tileset, x, y, z);
+      GenerateTileEntity(world, tile, tileset, x, y, z);
     });
   });
 }
@@ -85,7 +85,7 @@ function ObjectLayerParse(world, data, layer, height) {
       const entity = new CES.Entity();
       entity.addComponent(new ComponentPos(object.x + object.width * 0.5, height - object.y - object.height / 2));
       entity.addComponent(new ComponentScale(object.width, object.height));
-      entity.addComponent(new ComponentBouding());
+      entity.addComponent(new ComponentObstacle());
       world.addEntity(entity);
     });
   }
@@ -124,6 +124,16 @@ function ObjectLayerParse(world, data, layer, height) {
           return false;
         });
       }
+      world.addEntity(entity);
+    });
+  }
+  else if("camera" == layer.name) {
+    layer.objects.forEach(object => {
+      const entity = new CES.Entity();
+      entity.addComponent(new ComponentPos(object.x + object.width * 0.5, height - object.y - object.height / 2));
+      entity.addComponent(new ComponentScale(object.width, object.height));
+      entity.addComponent(new ComponentBouding());
+      entity.addComponent(new ComponentCamera(object.type));
       world.addEntity(entity);
     });
   }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="80" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="18">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="80" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="21">
  <tileset firstgid="1" name="bg" tilewidth="256" tileheight="240" tilecount="5" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
@@ -214,9 +214,24 @@
   </object>
  </objectgroup>
  <objectgroup id="10" name="bgm" locked="1">
-  <object id="17" name="bgm" x="-78" y="-82" width="1468" height="382">
+  <object id="17" name="bgm" x="1058" y="-55.3333" width="308" height="382">
+   <properties>
+    <property name="file" value="porfondo_rosso"/>
+   </properties>
+  </object>
+  <object id="18" name="bgm" x="-33.3333" y="-48" width="1012" height="369.333">
    <properties>
     <property name="file" value="quiet_hill"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="11" name="camera" locked="1">
+  <object id="19" name="camera" type="follow_smooth" x="946.667" y="-69.3333" width="477.333" height="418.667"/>
+ </objectgroup>
+ <objectgroup id="12" name="madness">
+  <object id="20" name="madness" type="once" x="1071.5" y="32.5" width="208.5" height="160">
+   <properties>
+    <property name="value" type="int" value="-100"/>
    </properties>
   </object>
  </objectgroup>

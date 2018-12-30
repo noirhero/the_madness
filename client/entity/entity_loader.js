@@ -93,6 +93,18 @@ function EntityLoad(entity_obj) {
     }
   })(entity_obj.spawner_comp);
 
+  (obstacle_comp => {
+    if(obstacle_comp) {
+      components[components.length] = new ComponentObstacle(obstacle_comp.type);
+    }
+  })(entity_obj.obstacle_comp);
+
+  (camera_comp => {
+    if(camera_comp) {
+      components[components.length] = new ComponentCamera(camera_comp.type);
+    }
+  })(entity_obj.camera_comp);
+
   const num_components = components.length;
   if(0 === num_components) {
     return null;
