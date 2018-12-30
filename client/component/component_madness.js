@@ -5,5 +5,6 @@ const ComponentMadness = CES.Component.extend({
   init: function(type, value) {
     this.type = type || "Once";
     this.value = value || 0;
+    this.is_use = false;
   },
 });

@@ -38,6 +38,7 @@ class GameScene extends Scene {
       world.addSystem(new SystemMovementNetPlayer());
       world.addSystem(new SystemCamera());
       world.addSystem(new SystemBGM());
+      world.addSystem(new SystemMadness());
       //world.addSystem(new SystemDebugDrawCollisionDetection());
 
       scene_data.entities.forEach(entity_url => {
