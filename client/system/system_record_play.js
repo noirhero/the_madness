@@ -17,7 +17,7 @@ const SystemRecordPlay = CES.System.extend({
       const blob_buffer = websocket_entities[0].getComponent("Websocket").blob_buffer;
       let blob_data = blob_buffer.shift();
       while(blob_data) {
-        const wav_url = URL.createObjectURL(event.data);
+        const wav_url = URL.createObjectURL(blob_data);
 
         if(10 > madness) {
           const voice = new Pizzicato.sound({

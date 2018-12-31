@@ -23,6 +23,16 @@ const SystemRecordKeyboard = CES.System.extend({
     });
   },
   update: function() {
+    const websocket_entities = this.world.getEntities("Websocket");
+    if(0 === websocket_entities.length) {
+      return;
+    }
+
+    const websocket_comp = websocket_entities[0].getComponent("Websocket");
+    if(!websocket_comp.socket) {
+      return;
+    }
+
     function StopRecord(mic_comp) {
       if(false === mic_comp.is_recording) {
         return;
@@ -38,6 +48,8 @@ const SystemRecordKeyboard = CES.System.extend({
 
       mic_comp.recorder.stop();
       mic_comp.recorder.exportWAV(blob => {
+        websocket_comp.socket.send(blob);
+
         mic_comp.is_recording = false;
         this.is_exporting = false;
       });
