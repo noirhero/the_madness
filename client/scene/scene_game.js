@@ -32,6 +32,7 @@ class GameScene extends Scene {
         }
       });
       world.addSystem(new SystemMovementKeyboard());
+      world.addSystem(new SystemMovementTouch());
       world.addSystem(new SystemMovementCollisionDetection());
       world.addSystem(new SystemMovementAnim());
       world.addSystem(new SystemMovementSend());
