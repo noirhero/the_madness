@@ -1,12 +1,18 @@
 {
  "systems": [
    "animation",
+   "postprocess_begin",
    "render_sprite",
+   "postprocess_end",
    "viewport",
    "record",
    "spawn",
    "spawn_player",
-   "websocket"
+   "websocket",
+   "movement",
+   "camera",
+   "bgm",
+   "madness"
  ],
  "entities": [
    "data/entity_system.json"

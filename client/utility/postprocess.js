@@ -24,7 +24,7 @@ function WebGLCreateSceneFrameBuffer() {
 }
 
 function WebGLCreateSceneDepthBuffer() {
-  //GL.bindFramebuffer(GL.FRAMEBUFFER, SCENE_FRAME_BUFFER);
+  GL.bindFramebuffer(GL.FRAMEBUFFER, SCENE_FRAME_BUFFER);
 
   SCENE_DEPTH_BUFFER = GL.createRenderbuffer();
   GL.bindRenderbuffer(GL.RENDERBUFFER, SCENE_DEPTH_BUFFER);
@@ -32,7 +32,7 @@ function WebGLCreateSceneDepthBuffer() {
   GL.framebufferRenderbuffer(GL.FRAMEBUFFER, GL.DEPTH_ATTACHMENT, GL.RENDERBUFFER, SCENE_DEPTH_BUFFER);
   GL.bindRenderbuffer(GL.RENDERBUFFER, null);
 
-  //GL.bindFramebuffer(GL.FRAMEBUFFER, null);
+  GL.bindFramebuffer(GL.FRAMEBUFFER, null);
 }
 
 function WebGLResizeSceneResources() {

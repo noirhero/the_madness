@@ -12,14 +12,22 @@ class GameScene extends Scene {
         if("animation" == system_text) {
           world.addSystem(new SystemAnimation());
         }
+        else if("postprocess_begin" == system_text) {
+          world.addSystem(new SystemPostprocessBegin());
+        }
         else if("render_sprite" == system_text) {
           world.addSystem(new SystemRenderSprite());
+          //world.addSystem(new SystemDebugDrawCollisionDetection());
+        }
+        else if("postprocess_end" == system_text) {
+          world.addSystem(new SystemPostprocessEnd());
         }
         else if("viewport" == system_text) {
           world.addSystem(new SystemViewport());
         }
         else if("record" == system_text) {
           world.addSystem(new SystemRecordKeyboard());
+          world.addSystem(new SystemRecordPlay());
         }
         else if("spawn" == system_text) {
           world.addSystem(new SystemSpawn());
@@ -30,18 +38,24 @@ class GameScene extends Scene {
         else if("websocket" == system_text) {
           world.addSystem(new SystemWebsocket());
         }
+        else if("movement" == system_text) {
+          world.addSystem(new SystemMovementKeyboard());
+          world.addSystem(new SystemMovementTouch());
+          world.addSystem(new SystemMovementCollisionDetection());
+          world.addSystem(new SystemMovementAnim());
+          world.addSystem(new SystemMovementSend());
+          world.addSystem(new SystemMovementNetPlayer());
+        }
+        else if("camera" == system_text) {
+          world.addSystem(new SystemCamera());
+        }
+        else if("bgm" == system_text) {
+          world.addSystem(new SystemBGM());
+        }
+        else if("madness" == system_text) {
+          world.addSystem(new SystemMadness());
+        }
       });
-      world.addSystem(new SystemMovementKeyboard());
-      world.addSystem(new SystemMovementTouch());
-      world.addSystem(new SystemMovementCollisionDetection());
-      world.addSystem(new SystemMovementAnim());
-      world.addSystem(new SystemMovementSend());
-      world.addSystem(new SystemMovementNetPlayer());
-      world.addSystem(new SystemCamera());
-      world.addSystem(new SystemBGM());
-      world.addSystem(new SystemMadness());
-      world.addSystem(new SystemRecordPlay());
-      //world.addSystem(new SystemDebugDrawCollisionDetection());
 
       scene_data.entities.forEach(entity_url => {
         ReadFile(entity_url, entity_text => {
