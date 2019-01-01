@@ -29,7 +29,12 @@ class GameScene extends Scene {
           world.addSystem(new SystemViewport());
         }
         else if("record" == system_text) {
-          world.addSystem(new SystemRecordKeyboard());
+          if("ontouchstart" in document.documentElement) {
+            world.addSystem(new SystemRecordTouch());
+          }
+          else {
+            world.addSystem(new SystemRecordKeyboard());
+          }
           world.addSystem(new SystemRecordPlay());
         }
         else if("spawn" == system_text) {

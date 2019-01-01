@@ -16,8 +16,7 @@ const SystemRecordButton = CES.System.extend({
       const pos = record_btn_entities[0].getComponent("Pos").pos;
       const scale = record_btn_entities[0].getComponent("Scale").scale;
 
-      scale[0] = CANVAS_W * record_btn_comp.width_ratio;
-      scale[1] = CANVAS_H * record_btn_comp.height_ratio;
+      scale[0] = scale[1] = Math.max(CANVAS_W * record_btn_comp.width_ratio, CANVAS_H * record_btn_comp.height_ratio);
       pos[0] = (CANVAS_W * 0.5) - (record_btn_comp.right_offset * scale[0]) - (scale[0] * 0.5);
       pos[1] = (CANVAS_H * -0.5) + (record_btn_comp.right_offset * scale[1]) + (scale[1] * 0.5);
 

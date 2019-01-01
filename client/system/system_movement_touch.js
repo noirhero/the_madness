@@ -24,7 +24,7 @@ const SystemMovementTouch = CES.System.extend({
           this.right_id = touch.identifier;
         }
       }
-    });
+    }, false);
 
     document.addEventListener("touchend", event => {
       const num_touches = event.changedTouches.length;
@@ -40,9 +40,16 @@ const SystemMovementTouch = CES.System.extend({
           this.right_id = -1;
         }
       }
-    });
+    }, false);
   },
   update: function(delta) {
+    const mic_entites = this.world.getEntities("Mic");
+    if(0 < mic_entites.length) {
+      if(true === mic_entites[0].getComponent("Mic").is_recording) {
+        return;
+      }
+    }
+
     const direction = this.direction;
     direction[0] = 0;
     if(true === this.press_left) {
