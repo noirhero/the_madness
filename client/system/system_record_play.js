@@ -20,20 +20,24 @@ const SystemRecordPlay = CES.System.extend({
         const wav_url = URL.createObjectURL(blob_data);
 
         if(10 > madness) {
-          const voice = new Pizzicato.sound({
+          const voice = new Pizzicato.Sound({
             source: "file",
             options: {
               path: [wav_url],
             }
           }, () => {
-            voice.addEffect(new Pizzicato.Effects.Distortion({gain: 0.84}));
+            voice.addEffect(new Pizzicato.Effects.RingModulator({
+              speed: 1324,
+              distortion: 35,
+              mix: 0.5,
+            }));
             voice.play();
           });
         }
         else {
           new Howl({
             src: [wav_url],
-            ext: ["wav"],
+            format: ["wav"],
           }).play();
         }
 
