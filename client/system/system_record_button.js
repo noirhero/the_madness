@@ -13,6 +13,7 @@ const SystemRecordButton = CES.System.extend({
 
     const record_btn_comp = record_btn_entities[0].getComponent("RecordButton");
     if(CANVAS_W !== this.w || CANVAS_H !== this.h) {
+      record_btn_entities[0].getComponent("Bounding").data = null;
       const pos = record_btn_entities[0].getComponent("Pos").pos;
       const scale = record_btn_entities[0].getComponent("Scale").scale;
 
