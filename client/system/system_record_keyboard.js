@@ -29,7 +29,7 @@ const SystemRecordKeyboard = CES.System.extend({
     }
 
     const websocket_comp = websocket_entities[0].getComponent("Websocket");
-    if(!websocket_comp.socket) {
+    if(!websocket_comp.socket || 1/*open*/ !== websocket_comp.socket.readyState) {
       return;
     }
 

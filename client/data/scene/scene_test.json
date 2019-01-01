@@ -3,6 +3,7 @@
    "animation",
    "postprocess_begin",
    "render_sprite",
+   "record_button",
    "postprocess_end",
    "viewport",
    "record",
@@ -15,7 +16,8 @@
    "madness"
  ],
  "entities": [
-   "data/entity_system.json"
+   "data/entity_system.json",
+   "data/entity_record_button.json"
  ],
  "tiled": "data/tiled_madness.json",
  "next": "data/scene/scene_test.json"

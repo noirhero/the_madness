@@ -111,6 +111,12 @@ function EntityLoad(entity_obj) {
     }
   })(entity_obj.madness_comp);
 
+  (record_button_comp => {
+    if(record_button_comp) {
+      components[components.length] = new ComponentRecordButton();
+    }
+  })(entity_obj.record_button_comp);
+
   const num_components = components.length;
   if(0 === num_components) {
     return null;

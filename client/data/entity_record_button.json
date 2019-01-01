@@ -1,0 +1,10 @@
+{
+ "record_button_comp": {},
+ "pos_comp": {},
+ "scale_comp": {},
+ "texcoord_comp": {},
+ "texture_comp": {
+  "url": "data/texture/talk_0.png"
+ },
+ "bounding_comp": {}
+}

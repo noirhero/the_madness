@@ -19,6 +19,9 @@ class GameScene extends Scene {
           world.addSystem(new SystemRenderSprite());
           //world.addSystem(new SystemDebugDrawCollisionDetection());
         }
+        else if("record_button" == system_text) {
+          world.addSystem(new SystemRecordButton());
+        }
         else if("postprocess_end" == system_text) {
           world.addSystem(new SystemPostprocessEnd());
         }
