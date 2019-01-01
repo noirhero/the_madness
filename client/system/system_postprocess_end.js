@@ -58,12 +58,11 @@ const SystemPostprocessEnd = CES.System.extend({
     this.displacement_texture = new Texture("data/texture/displacement.png");
   },
   update: function(delta) {
+    let player_madness = 100;
     const player_entites = this.world.getEntities("Player");
-    if(0 === player_entites.length) {
-      return;
+    if(0 < player_entites.length) {
+      player_madness = player_entites[0].getComponent("Player").madness;
     }
-
-    const player_madness = player_entites[0].getComponent("Player").madness;
 
     if(false === this.displacement_texture.IsRenderable()) {
       return;
