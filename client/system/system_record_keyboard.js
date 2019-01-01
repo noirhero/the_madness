@@ -50,11 +50,6 @@ const SystemRecordKeyboard = CES.System.extend({
       mic_comp.recorder.exportWAV(blob => {
         websocket_comp.socket.send(blob);
 
-        // new Howl({
-        //   src: [URL.createObjectURL(blob)],
-        //   format: ["wav"],
-        // }).play();
-
         mic_comp.recorder.clear();
         mic_comp.is_recording = false;
         this.is_exporting = false;
@@ -75,7 +70,7 @@ const SystemRecordKeyboard = CES.System.extend({
 
       this.stop_timer = setTimeout(() => {
         StopRecord.call(this, mic_comp);
-      }, 10000);
+      }, 2000);
     }
 
     if(true === this.is_exporting) {
