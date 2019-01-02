@@ -56,6 +56,22 @@ const SystemPostprocessEnd = CES.System.extend({
 
     this.displacement_scale = glMatrix.vec4.create();
     this.displacement_texture = new Texture("data/texture/displacement.png");
+
+    const wait_for_fn = () => {
+      if(false === this.displacement_texture.IsRenderable()) {
+        setTimeout(wait_for_fn, 500);
+      }
+      else {
+        GL.activeTexture(GL.TEXTURE0);
+        GL.bindTexture(GL.TEXTURE_2D, this.displacement_texture.GetTexture());
+        GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.LINEAR);
+        GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR);
+        GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.REPEAT);
+        GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.REPEAT);
+        GL.bindTexture(GL.TEXTURE_2D, null);
+      }
+    };
+    wait_for_fn();
   },
   update: function(delta) {
     let player_madness = 100;
@@ -73,7 +89,7 @@ const SystemPostprocessEnd = CES.System.extend({
 
     GL.useProgram(this.program);
 
-    this.displacement_scale[0] += Math.RangeRandom(0, 100 - player_madness) * delta;
+    this.displacement_scale[0] += Math.RangeRandom(0, (100 - player_madness) * 0.1) * delta;
     this.displacement_scale[2] = 1 / (CANVAS_W * 0.5);
     this.displacement_scale[3] = 1 / (CANVAS_H * 0.5);
     GL.uniform4fv(this.u_displacement_scale, this.displacement_scale);
@@ -84,10 +100,6 @@ const SystemPostprocessEnd = CES.System.extend({
 
     GL.activeTexture(GL.TEXTURE1);
     GL.bindTexture(GL.TEXTURE_2D, this.displacement_texture.GetTexture());
-    GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.LINEAR);
-    GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR);
-    GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.REPEAT);
-    GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.REPEAT);
     GL.uniform1i(this.s_diplacement, 1);
 
     GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.ib);
