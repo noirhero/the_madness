@@ -4,6 +4,7 @@ extern crate ws;
 extern crate lazy_static;
 
 use std::sync::Mutex;
+use std::env;
 
 lazy_static::lazy_static! {
   static ref SENDERS: Mutex<Vec<ws::Sender>> = Mutex::new(Vec::new());
@@ -57,6 +58,12 @@ impl ws::Factory for Server {
 }
 
 fn main() {
-  ws::WebSocket::new(Server {}).unwrap().listen("localhost:8989").unwrap();
-  //ws::WebSocket::new(Server {}).unwrap().listen("192.168.219.148:8989").unwrap();
+  if let Some(arg1) = env::args().nth(1) {
+    println!("Open : {}", arg1);
+    ws::WebSocket::new(Server {}).unwrap().listen(arg1).unwrap();
+  }
+  else {
+    println!("Open : localhost:8989");
+    ws::WebSocket::new(Server {}).unwrap().listen("localhost:8989").unwrap();
+  }
 }
