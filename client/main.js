@@ -5,6 +5,6 @@ function Main() {
 
   WebGLInitialize();
 
-  const scene_mng = new SceneManager(GetSceneInRegistry("Game", "data/scene/scene_test.json").Initialize());
+  const scene_mng = new SceneManager(GetSceneInRegistry("Game", "data/scene/scene_madness.json").Initialize());
   scene_mng.Run();
 }
