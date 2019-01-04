@@ -48,9 +48,14 @@ const SystemRecordTouch = CES.System.extend({
     const record_btn_entity = record_btn_entites[0];
     const record_btn_bounding_comp = record_btn_entity.getComponent("Bounding");
     if(!record_btn_bounding_comp.data) {
-      const pos = record_btn_entity.getComponent("Pos").pos;
-      const scale = record_btn_entity.getComponent("Scale").scale;
-      record_btn_bounding_comp.data = new SAT.Box(new SAT.V(pos[0] - scale[0] * 0.5, pos[1] - scale[1] * 0.5), scale[0], scale[1]).toPolygon();
+      return;
+    }
+
+    const camera_entities = this.world.getEntities("Camera");
+    if(0 < camera_entities.length) {
+      const camera_pos = camera_entities[0].getComponent("Camera").pos;
+      this.press_circle.pos.x += camera_pos[0];
+      this.press_circle.pos.y += camera_pos[1];
     }
 
     function StopRecord(mic_comp) {
