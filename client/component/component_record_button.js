@@ -3,8 +3,18 @@
 const ComponentRecordButton = CES.Component.extend({
   name: "RecordButton",
   init: function() {
-    this.normal_texture = new Texture("data/texture/talk_0.png");
-    this.press_texture = new Texture("data/texture/talk_1.png");
+    const normal_texture_url = "data/texture/talk_0.png";
+    const press_texture_url = "data/texture/talk_1.png";
+    this.normal_texture = TEXTURES[normal_texture_url];
+    this.press_texture = TEXTURES[press_texture_url];
+
+    if(!this.normal_texture) {
+      TEXTURES[normal_texture_url] = this.normal_texture = new Texture(normal_texture_url);
+    }
+    if(!this.press_texture) {
+      TEXTURES[press_texture_url] = this.press_texture = new Texture(press_texture_url);
+    }
+
     this.width_ratio = 0.1;
     this.height_ratio = 0.1;
     this.right_offset = 0.5;

@@ -55,7 +55,10 @@ const SystemPostprocessEnd = CES.System.extend({
     this.s_diplacement = GL.getUniformLocation(program, "sampler_displacement");
 
     this.displacement_scale = glMatrix.vec4.create();
-    this.displacement_texture = new Texture("data/texture/displacement.png");
+    this.displacement_texture = TEXTURES["data/texture/displacement.png"];
+    if(!this.displacement_texture) {
+      TEXTURES["data/texture/displacement.png"] = this.displacement_texture = new Texture("data/texture/displacement.png");
+    }
 
     const wait_for_fn = () => {
       if(false === this.displacement_texture.IsRenderable()) {
