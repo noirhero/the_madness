@@ -17,8 +17,8 @@ the_madness 는 간단 한 html5 게임 입니다.<br>
 1. 저장소를 복사 합니다.<br>
 (1. Copy the repository.)<br>
 <br>
-2. ./server 경로에서 'cargo run' 커맨드를 실행 합니다.
+2. ./server 경로에서 'cargo run' 커맨드를 실행 합니다.<br>
 <br>
-3. 커파일 뒤에 'localhost:8989' 포트로 서버가 실행 되는것을 확인 합니다.
+3. 커파일 뒤에 'localhost:8989' 포트로 서버가 실행 되는것을 확인 합니다.<br>
 <br>
 4. ./client/index.html 을 
