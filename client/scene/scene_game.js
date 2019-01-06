@@ -42,6 +42,7 @@ class GameScene extends Scene {
         }
         else if("spawn_player" == system_text) {
           world.addSystem(new SystemSpawnPlayer());
+          world.addSystem(new SystemDespawnNetPlayer());
         }
         else if("websocket" == system_text) {
           world.addSystem(new SystemWebsocket());
