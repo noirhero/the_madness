@@ -77,24 +77,25 @@ const SystemPostprocessEnd = CES.System.extend({
     wait_for_fn();
   },
   update: function(delta) {
+    if(false === this.displacement_texture.IsRenderable()) {
+      return;
+    }
+
     let player_madness = 100;
     const player_entites = this.world.getEntities("Player");
     if(0 < player_entites.length) {
       player_madness = player_entites[0].getComponent("Player").madness;
     }
-
-    if(false === this.displacement_texture.IsRenderable()) {
-      return;
-    }
+    const madness_value = Math.RangeRandom(0, (100 - player_madness) * 0.1);
 
     GL.disable(GL.DEPTH_TEST);
     GL.bindFramebuffer(GL.FRAMEBUFFER, null);
 
     GL.useProgram(this.program);
 
-    this.displacement_scale[0] += Math.RangeRandom(0, (100 - player_madness) * 0.1) * delta;
-    this.displacement_scale[2] = 1 / (CANVAS_W * 0.5);
-    this.displacement_scale[3] = 1 / (CANVAS_H * 0.5);
+    this.displacement_scale[0] += 0.01 * delta;
+    this.displacement_scale[2] = 1 / (CANVAS_W * 0.5) * madness_value;
+    this.displacement_scale[3] = 1 / (CANVAS_H * 0.5) * madness_value;
     GL.uniform4fv(this.u_displacement_scale, this.displacement_scale);
 
     GL.activeTexture(GL.TEXTURE0);
