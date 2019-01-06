@@ -1,16 +1,11 @@
 // Copyright 2018 TAP, Inc. All Rights Reserved.
 
-function GetFrameFunction() {
-  return window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-}
-
-function GetCancelFrameFunction() {
-  return window.cancelAnimationFrame || window.mozCancelAnimationFrame;
-}
-
 var FRAME_ID = 0;
+var FRAME_FN = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+var CANCEL_FRAME_FN = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+
 function Frame(fn) {
-  FRAME_ID = GetFrameFunction()(fn);
+  FRAME_ID = FRAME_FN(fn);
 }
 
 class FramePerSecond {
