@@ -43,10 +43,11 @@ the_madness 는 간단 한 html5 게임 입니다.
 # 외부 도움 (External help)
 ![](./img/readme_img_04.png)
 + [Louis Zuno](https://www.patreon.com/ansimuz/overview)  
-사용 된 매우 훌륭 한 스프라이트 리소스는 모두 그의 작품 입니다.  
+사용 된 매우 훌륭 한 pixelart 리소스는 모두 그의 작품 입니다.  
 저는 그에 후원자 이기도 합니다.  
-(All of the very good sprite resources used are his works.  
+(All of the very good pixelart resources used are his works.  
 I am also a supporter of him.)  
+
 
 ![](./img/readme_img_05.png)
 + [Thorbjørn Lindeijer](https://www.patreon.com/bjorn/overview)  
@@ -54,3 +55,11 @@ I am also a supporter of him.)
 저는 그에 후원자 이기도 합니다.  
 (I used a very nice `Tiled Editor`.  
 I am also a supporter of him.)  
+
+
+![](./img/readme_img_02.png)
++ [ASEPRITE](https://store.steampowered.com/app/431730/Aseprite/)  
+매우 훌륭 한 pixelart 스프라이트 툴 입니다.  
+구입 하시는 것을 망설이지 마세요.  
+(It is a very nice pixelart sprite tool.  
+Do not hesitate to purchase.)  
