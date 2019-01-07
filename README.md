@@ -20,7 +20,6 @@ the_madness 는 간단 한 html5 게임 입니다.
 3. 컴파일 뒤에 'localhost:8989' 포트로 서버가 실행 되는것을 확인 합니다.  
 4. "설치경로/client/index.html" 을 웹브라우저 에서 실행 합니다.  
 해당 웹브라우저가 파일에 접근할 수 있는 옵션을 줘야 합니다. 예를 들어, [Chrome](http://www.chrome-allow-file-access-from-file.com/).  
-
 <br></br>
 1. Copy the repository.  
 2. Run the 'cargo run' command in the "InstallPath/server" path.  
