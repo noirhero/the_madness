@@ -27,3 +27,30 @@ the_madness 는 간단 한 html5 게임 입니다.
 2. Run the 'cargo run' command in the `InstallPath/server` path.  
 3. After compile, make sure that the server is running on the 'localhost: 8989' port.  
 4. Run `InstallPath/client/index.html` in your web browser.  
+
+키보드 왼쪽, 오른쪽 키로 이동 합니다.  
+(Move to the left and right keys of the keyboard.)  
+
+터치 디바이스는 화면 왼쪽, 오른쪽을 터치해서 이동 합니다.  
+(Touch devices are moved by touching the left and right sides of the screen.)  
+
+스페이스바나 말 풍선 아이콘을 클릭해서 음성을 녹음하면,  
+(If you record a voice by clicking the space bar or the speech balloon icon,)  
+
+접속 한 다른 플레이어에게 음성을 전송 합니다.  
+(Sends voice to other connected players.)  
+
+# 외부 도움 (External help)
+![](./img/readme_img_04.png)
++ [Louis Zuno](https://www.patreon.com/ansimuz/overview)  
+사용 된 매우 훌륭 한 스프라이트 리소스는 모두 그의 작품 입니다.  
+저는 그에 후원자 이기도 합니다.  
+(All of the very good sprite resources used are his works.  
+I am also a supporter of him.)  
+
+![](./img/readme_img_05.png)
++ [Thorbjørn Lindeijer](https://www.patreon.com/bjorn/overview)  
+매우 훌륭 한 `Tiled Editor`를 사용 했습니다.
+저는 그에 후원자 이기도 합니다.
+(I used a very nice `Tiled Editor`.  
+I am also a supporter of him.)  
