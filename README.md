@@ -50,7 +50,7 @@ I am also a supporter of him.)
 
 ![](./img/readme_img_05.png)
 + [Thorbjørn Lindeijer](https://www.patreon.com/bjorn/overview)  
-매우 훌륭 한 `Tiled Editor`를 사용 했습니다.
-저는 그에 후원자 이기도 합니다.
+매우 훌륭 한 `Tiled Editor`를 사용 했습니다.  
+저는 그에 후원자 이기도 합니다.  
 (I used a very nice `Tiled Editor`.  
 I am also a supporter of him.)  
