@@ -27,6 +27,7 @@ the_madness 는 간단 한 html5 게임 입니다.
 2. Run the 'cargo run' command in the `InstallPath/server` path.  
 3. After compile, make sure that the server is running on the 'localhost: 8989' port.  
 4. Run `InstallPath/client/index.html` in your web browser.  
+You need to give your web browser the option to access the file. For example, [Chrome](http://www.chrome-allow-file-access-from-file.com/).  
 
 키보드 왼쪽, 오른쪽 키로 이동 합니다.  
 (Move to the left and right keys of the keyboard.)  
@@ -39,6 +40,9 @@ the_madness 는 간단 한 html5 게임 입니다.
 
 접속 한 다른 플레이어에게 음성을 전송 합니다.  
 (Sends voice to other connected players.)  
+
+`https` 보안 이슈로, 로컬 실행 만 마이크가 작동 합니다.  
+(`https` security issue, only local run microphones work.)  
 
 # 외부 도움 (External help)
 ![](./img/readme_img_04.png)
