@@ -10,7 +10,6 @@ const SystemWebsocket = CES.System.extend({
     const websocket_comp = websocket_entities[0].getComponent("Websocket");
     if(!websocket_comp.socket) {
       websocket_comp.socket = new WebSocket("ws:\\localhost:8989");
-      //websocket_comp.socket = new WebSocket("ws:\\192.168.219.148:8989");
       websocket_comp.socket.onopen = () => {
         console.log("On connect websocket.");
       };
