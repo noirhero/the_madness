@@ -67,3 +67,12 @@ I am also a supporter of him.)
 구입 하시는 것을 망설이지 마세요.  
 (It is a very nice pixelart sprite tool.  
 Do not hesitate to purchase.)  
+
+# 써드파티 (Thirdparty)
++ [Pizzicato.js](https://github.com/alemangui/pizzicato) : Used the voice effects.  
++ [SAT.js](https://github.com/jriecken/sat-js) : Used the collision detection.    
++ [ces.js](https://github.com/qiao/ces.js) : Used the ecs framework.    
++ [controlKit.js](https://github.com/automat/controlkit.js) : Used the gui.  
++ [gl-matrix.js](https://github.com/toji/gl-matrix) : Used the mathmatics.  
++ [howler.js](https://github.com/goldfire/howler.js): Used the sound play.  
++ [recorder.js](https://github.com/mattdiamond/Recorderjs) : Used the voice recording.  
