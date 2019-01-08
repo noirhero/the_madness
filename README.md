@@ -76,3 +76,57 @@ Do not hesitate to purchase.)
 + [gl-matrix.js](https://github.com/toji/gl-matrix) : Used the mathmatics.  
 + [howler.js](https://github.com/goldfire/howler.js): Used the sound play.  
 + [recorder.js](https://github.com/mattdiamond/Recorderjs) : Used the voice recording.  
+
+# 기술 (Technology)
+## 엔진 (Engine)
+자체 제작 엔진 입니다.  
+(It it inhouse engine.)  
+
+위에 언급 한 라이브러리를 제외 하고는 모두 직접 개발 했습니다.  
+(Except for the library mentioned above, all were developed by self.)  
+## 골격 (Framework)
+[ECS](https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system) 를 기본으로 제작 되었습니다.  
+(It is based on [ECS](https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system)).  
+
+게임에 모든 구성이 Entity, Component, System 으로 이루어져 있습니다.  
+(All configurations in the game consist of Entity, Component, and System.)  
+## 랜더링 (Rendering)
+WebGL을 이용해서 직접 개발 했습니다.  
+(Developed using WebGL.)  
+
+최대 한 모아서 Batch rendering 합니다.  
+(Batch rendering.)  
+
+후 처리 효과도 지원 합니다.  
+(Post processing effects are also supported.)  
+
+현재는 광기 상태가 되었을 때, 화면이 지글 거리는 효과가 들어가 있습니다.  
+(Now, when the mad state, the screen contains a sizzling effect.)  
+## 에디터 (Editor)
+### 애니메이션 (Animation)
+`설치경로/client/editor/animation/editor_anim.html` 에서 실행 가능 합니다.  
+(Executable in `InstallPath/client/editor/animation/editor_anim.html`).  
+
+`ASEPRITE` 툴에서 뽑은 데이터를 게임에 맞게 가공해서 뽑아 줍니다.  
+(`ASEPRITE` data is processed and extracted.)  
+### 엔티티 (Entity)
+`설치경로/client/editor/entity/editor_entity.html` 에서 실행 가능 합니다.  
+(Executable in `InstallPath/client/editor/entity/editor_entity.html`).  
+
+Entity에 구성 될 Component들을 설정하고, 뽑아 줍니다.  
+(Sets and extracts the Components to be configured in the Entity.)  
+### 타일드 (Tiled)
+`설치경로/client/editor/tiled/editor_tiled.html` 에서 실행 가능 합니다.  
+(Executable in `InstallPath/client/editor/tiled/editor_tiled.html`).  
+
+`Tiled Editor` 에서 뽑은 데이터를 게임에 맞게 가공해서 뽑아 줍니다.  
+(`Tiled Editor` data is processed and extracted.)  
+## 서버 (Server)
+rust 언어로 개발 했습니다.  
+(Developed in rust language.)  
+
+간단 한 Echo 서버 입니다.  
+(It is a simple Echo server.)  
+
+Websocket 으로 송신 합니다.  
+(Send to Websocket.)  
