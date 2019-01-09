@@ -134,3 +134,10 @@ rust 언어로 개발 했습니다.
 
 Websocket 으로 송신 합니다.  
 (Send to Websocket.)  
+
+# 해야 할 것 (Todo)
++ Texture Atlas.  
++ Texture Compress.  
++ Camera Culling.  
++ Entity Instancing.  
++ Matching Room.
