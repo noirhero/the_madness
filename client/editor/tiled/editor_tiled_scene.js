@@ -4,6 +4,10 @@ class EditorTiledScene extends Scene {
   constructor() {
     super();
 
+    const atlaspack_canvas = document.createElement("canvas");
+    atlaspack_canvas.width = 256;
+    atlaspack_canvas.height = 256;
+
     const entity = new CES.Entity();
     entity.addComponent(new ComponentPlayer());
     entity.addComponent(new ComponentViewport());
@@ -25,6 +29,7 @@ class EditorTiledScene extends Scene {
     this.entity_ = entity;
     this.camera_pos_system_ = camera_pos_system;
     this.controlKit_ = new ControlKit();
+    this.atlaspack_ = window.atlaspack(atlaspack_canvas);
   }
 
   Initialize() {
@@ -92,10 +97,13 @@ class EditorTiledScene extends Scene {
             return;
           }
 
-          world.getEntities("Scale").forEach(entity => {
+          world.getEntities("Pos", "Scale").forEach(entity => {
             if(player_entity === entity) {
               return;
             }
+
+            const pos = entity.getComponent("Pos").pos;
+            pos[1] += number * 0.5;
 
             const scale = entity.getComponent("Scale").scale;
             scale[1] *= 1 / tiled_obj.prev_scale_y;
@@ -205,6 +213,76 @@ class EditorTiledScene extends Scene {
         element_save.href = URL.createObjectURL(blob);
         element_save.download = world.name;
         element_save.click();
+      });
+
+
+    const atlaspack_obj = {
+      name: "atlas",
+      resolution: this.atlaspack_.canvas.width,
+      resolution_presets: [32, 64, 128, 256, 512, 1024, 2048],
+    };
+    controlKit.addPanel({
+      fixed: false,
+      label: "Atlas",
+      position: [200, 0]
+    })
+      .addStringInput(atlaspack_obj, "name")
+      .addNumberInput(atlaspack_obj, "resolution", {
+        presets: atlaspack_obj.resolution_presets,
+        onChange: (number) => {
+          if(number === this.atlaspack_.canvas.width) {
+            return;
+          }
+
+          const old_resolution = this.atlaspack_.canvas.width;
+          atlaspack_obj.resolution_presets.some((n) => {
+            if(number === n) {
+              this.atlaspack_.canvas.getContext("2d").clearRect(0, 0, old_resolution, old_resolution);
+              this.atlaspack_.canvas.width = this.atlaspack_.canvas.height = number;
+              this.atlaspack_ = window.atlaspack(this.atlaspack_.canvas);
+              return true;
+            }
+            return false;
+          });
+        },
+      }).addButton("RESET", () => {
+        const resolution = this.atlaspack_.canvas.width;
+        this.atlaspack_.canvas.getContext("2d").clearRect(0, 0, resolution, resolution);
+      }).addButton("PACK", () => {
+        const element_load = document.createElement("load");
+        element_load.innerHTML = "<input type=\"file\" accept=\".png\" multiple>";
+
+        const dialog = element_load.firstChild;
+        dialog.addEventListener("change", () => {
+          const atlaspack = this.atlaspack_;
+          const num_files = dialog.files.length;
+          for(let i = 0; i < num_files; ++i) {
+            const read_file = dialog.files[i];
+            if(!read_file.name.match(/.png/i)) {
+              continue;
+            }
+
+            const image = new Image();
+            image.name = read_file.name;
+            image.onload = ()=> {
+              const node = atlaspack.pack(image);
+              if(!node) {
+                console.log("Packing failed : " + image.name);
+              }
+            };
+            image.src = URL.createObjectURL(read_file);
+          }
+        });
+        dialog.click();
+      }).addButton("SAVE", () => {
+        const element_save = document.createElement("a");
+        element_save.href = this.atlaspack_.canvas.toDataURL();
+        element_save.download = atlaspack_obj.name;
+        element_save.click();
+      }).addButton("APPLY", () => {
+        const resolution = this.atlaspack_.canvas.width;
+        const uv_map = this.atlaspack_.uv(resolution, resolution);
+        // to do
       });
 
 
