@@ -97,13 +97,10 @@ class EditorTiledScene extends Scene {
             return;
           }
 
-          world.getEntities("Pos", "Scale").forEach(entity => {
+          world.getEntities("Scale").forEach(entity => {
             if(player_entity === entity) {
               return;
             }
-
-            const pos = entity.getComponent("Pos").pos;
-            pos[1] += number * 0.5;
 
             const scale = entity.getComponent("Scale").scale;
             scale[1] *= 1 / tiled_obj.prev_scale_y;
@@ -220,6 +217,7 @@ class EditorTiledScene extends Scene {
       name: "atlas",
       resolution: this.atlaspack_.canvas.width,
       resolution_presets: [32, 64, 128, 256, 512, 1024, 2048],
+      apply_path: "",
     };
     controlKit.addPanel({
       fixed: false,
@@ -279,10 +277,27 @@ class EditorTiledScene extends Scene {
         element_save.href = this.atlaspack_.canvas.toDataURL();
         element_save.download = atlaspack_obj.name;
         element_save.click();
-      }).addButton("APPLY", () => {
+      }).addStringInput(atlaspack_obj, "apply_path").addButton("APPLY", () => {
         const resolution = this.atlaspack_.canvas.width;
         const uv_map = this.atlaspack_.uv(resolution, resolution);
-        // to do
+
+        world.getEntities("Texture", "Texcoord").forEach(entity => {
+          const texture_comp = entity.getComponent("Texture");
+          for(let i in uv_map) {
+            if(-1 !== texture_comp.url.indexOf(i)) {
+              const uv_info = uv_map[i];
+              entity.getComponent("Texcoord").values = [
+                glMatrix.vec2.fromValues(uv_info[0][0], 1 - uv_info[0][1]),
+                glMatrix.vec2.fromValues(uv_info[1][0], 1 - uv_info[1][1]),
+                glMatrix.vec2.fromValues(uv_info[3][0], 1 - uv_info[3][1]),
+                glMatrix.vec2.fromValues(uv_info[2][0], 1 - uv_info[2][1]),
+              ];
+              entity.removeComponent("Texture");
+              entity.addComponent(new ComponentTexture(atlaspack_obj.apply_path));
+              break;
+            }
+          }
+        });
       });
 
 
