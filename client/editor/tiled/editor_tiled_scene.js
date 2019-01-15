@@ -218,11 +218,29 @@ class EditorTiledScene extends Scene {
       resolution: this.atlaspack_.canvas.width,
       resolution_presets: [32, 64, 128, 256, 512, 1024, 2048],
       apply_path: "",
+      select_pack: false,
+      pack_list_paths: [],
+      num_pack_list_path: 0,
     };
+    let pack_list_path_panel = controlKit.addPanel({
+      fixed: false,
+      label: "PackList",
+      position: [550, 0],
+    });
+    const reset_pack_list_panel = () => {
+      pack_list_path_panel.disable();
+      pack_list_path_panel = controlKit.addPanel({
+        fixed: false,
+        label: "PackList",
+        position: [550, 0],
+      });
+    };
+
     controlKit.addPanel({
       fixed: false,
       label: "Atlas",
-      position: [200, 0]
+      width: 250,
+      position: [250, 0],
     })
       .addStringInput(atlaspack_obj, "name")
       .addNumberInput(atlaspack_obj, "resolution", {
@@ -238,6 +256,9 @@ class EditorTiledScene extends Scene {
               this.atlaspack_.canvas.getContext("2d").clearRect(0, 0, old_resolution, old_resolution);
               this.atlaspack_.canvas.width = this.atlaspack_.canvas.height = number;
               this.atlaspack_ = window.atlaspack(this.atlaspack_.canvas);
+
+              atlaspack_obj.pack_list_paths.length = 0;
+              reset_pack_list_panel();
               return true;
             }
             return false;
@@ -246,9 +267,15 @@ class EditorTiledScene extends Scene {
       }).addButton("RESET", () => {
         const resolution = this.atlaspack_.canvas.width;
         this.atlaspack_.canvas.getContext("2d").clearRect(0, 0, resolution, resolution);
-      }).addButton("PACK", () => {
+        this.atlaspack_ = window.atlaspack(this.atlaspack_.canvas);
+
+        atlaspack_obj.pack_list_paths.length = 0;
+        reset_pack_list_panel();
+      }).addCheckbox(atlaspack_obj, "select_pack").addButton("PACK", () => {
         const element_load = document.createElement("load");
-        element_load.innerHTML = "<input type=\"file\" accept=\".png\" multiple>";
+        element_load.innerHTML = (false === atlaspack_obj.select_pack)
+          ? "<input type=\"file\" accept=\".png\" webkitdirectory multiple>"
+          : "<input type=\"file\" accept=\".png\" multiple>";
 
         const dialog = element_load.firstChild;
         dialog.addEventListener("change", () => {
@@ -261,11 +288,20 @@ class EditorTiledScene extends Scene {
             }
 
             const image = new Image();
-            image.name = read_file.name;
+            image.name = (false === atlaspack_obj.select_pack) ? read_file.webkitRelativePath : read_file.name;
             image.onload = ()=> {
               const node = atlaspack.pack(image);
               if(!node) {
-                console.log("Packing failed : " + image.name);
+                alert("Packing failed : " + image.name);
+              }
+              else {
+                atlaspack_obj.pack_list_paths[atlaspack_obj.pack_list_paths.length] = image.name;
+                atlaspack_obj.num_pack_list_path = atlaspack_obj.pack_list_paths.length;
+
+                reset_pack_list_panel();
+                pack_list_path_panel.addStringInput(atlaspack_obj, "num_pack_list_path", {
+                  presets: atlaspack_obj.pack_list_paths,
+                });
               }
             };
             image.src = URL.createObjectURL(read_file);
