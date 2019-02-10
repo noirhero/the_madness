@@ -156,6 +156,13 @@ function ObjectLayerParse(world, data, layer, height) {
       }
     });
   }
+  else if("instancing" == layer.name) {
+    layer.objects.forEach(object => {
+      const entity = new CES.Entity();
+      entity.addComponent(new ComponentInstancingBuild(object.x, object.y, object.width, object.height));
+      world.addEntity(entity);
+    });
+  }
 }
 
 function TiledParse(world, json_text) {
