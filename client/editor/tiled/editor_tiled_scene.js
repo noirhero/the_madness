@@ -23,12 +23,12 @@ class EditorTiledScene extends Scene {
     world.addSystem(new SystemRenderSprite());
     world.addSystem(new SystemUpdateMousePos());
     world.addSystem(new SystemRenderTileObject());
-    world.addSystem(new SystemInstancingBuild());
     world.addSystem(camera_pos_system);
     world.addEntity(entity);
 
     this.entity_ = entity;
     this.camera_pos_system_ = camera_pos_system;
+    this.instancing_build_system_ = new SystemInstancingBuild();
     this.controlKit_ = new ControlKit();
     this.atlaspack_ = window.atlaspack(atlaspack_canvas);
   }
@@ -37,6 +37,7 @@ class EditorTiledScene extends Scene {
     const controlKit = this.controlKit_;
     const world = this.world_;
     const camera_pos_system = this.camera_pos_system_;
+    const instancing_build_system = this.instancing_build_system_;
     const player_entity = this.entity_;
 
     const tiled_obj = {
@@ -138,6 +139,9 @@ class EditorTiledScene extends Scene {
           }
         });
         dialog.click();
+      }).addButton("Instancing", () => {
+        world.removeSystem(instancing_build_system);
+        world.addSystem(instancing_build_system);
       }).addButton("SAVE", () => {
         const entity_datas = [];
         world.getEntities().forEach(entity => {
