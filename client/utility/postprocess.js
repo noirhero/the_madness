@@ -1,4 +1,4 @@
-// Copyright 2018 TAP, Inc. All Rights Reserved.
+// Copyright 2018-2019 TAP, Inc. All Rights Reserved.
 
 var SCENE_TEXTURE = null;
 var SCENE_FRAME_BUFFER = null;

@@ -1,4 +1,4 @@
-// Copyright 2018 TAP, Inc. All Rights Reserved.
+// Copyright 2018-2019 TAP, Inc. All Rights Reserved.
 
 const SystemRecordPlay = CES.System.extend({
   update: function() {

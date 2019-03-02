@@ -1,4 +1,4 @@
-// Copyright 2018 TAP, Inc. All Rights Reserved.
+// Copyright 2018-2019 TAP, Inc. All Rights Reserved.
 
 const LIMIT_TEXTURE = 8; // iPhone 5s, Galaxy note 3.
 const RAD_180 = glMatrix.glMatrix.toRadian(180);

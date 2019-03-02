@@ -1,4 +1,4 @@
-// Copyright 2018 TAP, Inc. All Rights Reserved.
+// Copyright 2018-2019 TAP, Inc. All Rights Reserved.
 
 var FRAME_ID = 0;
 var FRAME_FN = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
