@@ -23,6 +23,7 @@ class EditorTiledScene extends Scene {
     world.addSystem(new SystemRenderSprite());
     world.addSystem(new SystemUpdateMousePos());
     world.addSystem(new SystemRenderTileObject());
+    world.addSystem(new SystemInstancingBuild());
     world.addSystem(camera_pos_system);
     world.addEntity(entity);
 
