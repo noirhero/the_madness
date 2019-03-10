@@ -28,6 +28,10 @@ function Texture(url) {
     return texture;
   };
 
+  this.GetUrl = function() {
+    return url;
+  };
+
   this.IsRenderable = function() {
     return (null !== image) ? false : true;
   };

@@ -169,7 +169,7 @@ class EditorTiledScene extends Scene {
             }
           }
           if(entity.getComponent("Texture")) {
-            const url = entity.getComponent("Texture").url;
+            const url = entity.getComponent("Texture").texture.GetUrl();
             entity_data.texture_comp = {
               url: url.slice(url.indexOf("data")),
             };
