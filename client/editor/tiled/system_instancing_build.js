@@ -3,8 +3,6 @@
 const SystemInstancingBuild = CES.System.extend({
   update: function() {
     const world = this.world;
-    const instancing_comp = new ComponentInstancing();
-
     const world_transform = glMatrix.mat4.create();
     const world_pos = glMatrix.vec3.create();
 
@@ -12,6 +10,7 @@ const SystemInstancingBuild = CES.System.extend({
       const build_comp = entity.getComponent("InstancingBuild");
       const check_box = (new SAT.Box(new SAT.V(build_comp.x, build_comp.y), build_comp.w, build_comp.h)).toPolygon();
 
+      const instancing_comp = new ComponentInstancing();
       world.getEntities("Scale", "Pos", "Texture", "Texcoord").forEach(mesh_entity => {
         if(mesh_entity.getComponent("Player")) {
           return;
@@ -33,7 +32,7 @@ const SystemInstancingBuild = CES.System.extend({
         }
 
         let subset = instancing_comp.subsets[instancing_comp.subsets.length - 1];
-        if(subset.vertices.length >= (NUM_BATCH * 6/*two polygon*/)) {
+        if(subset.vertices.length >= (NUM_BATCH * 6/*xyz uv ti*/ * 4/*quad*/)) {
           subset = instancing_comp.subsets[instancing_comp.subsets.length] = {
             vertices: [],
             textures: [texture],
@@ -44,13 +43,14 @@ const SystemInstancingBuild = CES.System.extend({
         let texture_idx = 0;
         if(false === subset.textures.some(i => {
           if(i === texture) {
-            texture_idx = i;
             return true;
           }
 
+          ++texture_idx;
           return false;
         })) {
           if(LIMIT_TEXTURE === subset.textures.length) {
+            texture_idx = 0;
             subset = instancing_comp.subsets[instancing_comp.subsets.length] = {
               vertices: [],
               textures: [texture],

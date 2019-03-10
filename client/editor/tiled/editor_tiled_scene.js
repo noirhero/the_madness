@@ -325,7 +325,7 @@ class EditorTiledScene extends Scene {
         world.getEntities("Texture", "Texcoord").forEach(entity => {
           const texture_comp = entity.getComponent("Texture");
           for(let i in uv_map) {
-            if(-1 !== texture_comp.url.indexOf(i)) {
+            if(-1 !== texture_comp.texture.GetUrl().indexOf(i)) {
               const uv_info = uv_map[i];
               entity.getComponent("Texcoord").values = [
                 glMatrix.vec2.fromValues(uv_info[0][0], 1 - uv_info[0][1]),

@@ -19,7 +19,7 @@ const QUAD_LOCAL_POS = [
   glMatrix.vec3.fromValues(0.5, -0.5, 0.0),
 ];
 
-const NUM_BATCH = 130;
+const NUM_BATCH = 256;
 const BATCH_QUAD_XYZUV = new Float32Array(NUM_BATCH * 5/*xyz uv*/ * 4/*quad*/);
 const BATCH_QUAD_XYZIUV = new Float32Array(NUM_BATCH * 6/*xyz uv ti*/ * 4/*quad*/);
 const BATCH_QUAD_I = function() {
