@@ -1,3 +1,4 @@
+
 // Copyright 2018-2019 TAP, Inc. All Rights Reserved.
 
 const SystemInstancingBuild = CES.System.extend({
@@ -12,7 +13,7 @@ const SystemInstancingBuild = CES.System.extend({
 
       const instancing_comp = new ComponentInstancing();
       world.getEntities("Scale", "Pos", "Texture", "Texcoord").forEach(mesh_entity => {
-        if(mesh_entity.getComponent("Player")) {
+        if(mesh_entity.getComponent("Player") || mesh_entity.getComponent("Anim")) {
           return;
         }
 
