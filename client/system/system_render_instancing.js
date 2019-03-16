@@ -76,6 +76,20 @@ const SystemRenderInstancing = CES.System.extend({
 
     instancings.forEach(entity => {
       for(let subset of entity.getComponent("Instancing").subsets) {
+        const texture_indices = [];
+        for(const texture of subset.textures) {
+          if(false === texture.IsRenderable()) {
+            return;
+          }
+
+          const ti = texture_indices.length;
+          texture_indices[texture_indices.length] = ti;
+
+          GL.activeTexture(GL.TEXTURE0 + ti);
+          GL.bindTexture(GL.TEXTURE_2D, texture.GetTexture());
+        }
+        GL.uniform1iv(system.s_sprite, texture_indices);
+
         if(null === subset.vb) {
           subset.vb = WebGLCreateBuffer(GL.ARRAY_BUFFER, new Float32Array(subset.vertices), GL.STATIC_DRAW);
           subset.num_draw = subset.vertices.length / (6/*xyz uv ti*/ * 4/*quad*/);
@@ -84,16 +98,6 @@ const SystemRenderInstancing = CES.System.extend({
         GL.vertexAttribPointer(system.a_world_pos, 3, GL.FLOAT, false, 24, 0);
         GL.vertexAttribPointer(system.a_tex_coord, 2, GL.FLOAT, false, 24, 12);
         GL.vertexAttribPointer(system.a_tex_index, 1, GL.FLOAT, false, 24, 20);
-
-        const texture_indices = [];
-        for(const texture of subset.textures) {
-          const ti = texture_indices.length;
-          texture_indices[texture_indices.length] = ti;
-
-          GL.activeTexture(GL.TEXTURE0 + ti);
-          GL.bindTexture(GL.TEXTURE_2D, texture.GetTexture());
-        }
-        GL.uniform1iv(system.s_sprite, texture_indices);
 
         GL.drawElements(GL.TRIANGLES, subset.num_draw * 6/*two polygon*/, GL.UNSIGNED_SHORT, 0);
       }

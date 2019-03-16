@@ -17,6 +17,7 @@ class GameScene extends Scene {
         }
         else if("render_sprite" == system_text) {
           world.addSystem(new SystemRenderSprite());
+          world.addSystem(new SystemRenderInstancing());
           //world.addSystem(new SystemDebugDrawCollisionDetection());
         }
         else if("record_button" == system_text) {

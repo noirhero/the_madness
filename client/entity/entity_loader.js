@@ -117,6 +117,32 @@ function EntityLoad(entity_obj) {
     }
   })(entity_obj.record_button_comp);
 
+  (instancing_comp => {
+    if(!instancing_comp) {
+      return;
+    }
+
+    const new_component = new ComponentInstancing();
+    for(const subset of instancing_comp.subsets) {
+      const textures = [];
+      for(const url of subset.textures) {
+        if(!TEXTURES[url]) {
+          TEXTURES[url] = new Texture(url);
+        }
+        textures[textures.length] = TEXTURES[url];
+      }
+
+      new_component.subsets[new_component.subsets.length] = {
+        vertices: subset.vertices,
+        textures: textures,
+        vb: null,
+        num_draw: 0,
+      };
+    }
+
+    components[components.length] = new_component;
+  })(entity_obj.instancing_comp);
+
   const num_components = components.length;
   if(0 === num_components) {
     return null;
