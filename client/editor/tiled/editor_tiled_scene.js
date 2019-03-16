@@ -207,6 +207,25 @@ class EditorTiledScene extends Scene {
               value: entity.getComponent("Madness").value,
             };
           }
+          if(entity.getComponent("Instancing")) {
+            const subsets = [];
+            for(const src_subset of entity.getComponent("Instancing").subsets) {
+              const dest_subset = {
+                vertices: src_subset.vertices,
+                textures: [],
+              };
+
+              for(const texture of src_subset.textures) {
+                const url = texture.GetUrl();
+                dest_subset.textures[dest_subset.textures.length] = url.slice(url.indexOf("data"));
+              }
+              subsets[subsets.length] = dest_subset;
+            }
+
+            entity_data.instancing_comp = {
+              subsets,
+            };
+          }
           entity_datas[entity_datas.length] = entity_data;
         });
 
