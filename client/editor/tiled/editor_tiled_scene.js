@@ -21,6 +21,7 @@ class EditorTiledScene extends Scene {
     const world = this.world_;
     world.addSystem(new SystemViewport());
     world.addSystem(new SystemRenderSprite());
+    world.addSystem(new SystemRenderInstancing());
     world.addSystem(new SystemUpdateMousePos());
     world.addSystem(new SystemRenderTileObject());
     world.addSystem(camera_pos_system);

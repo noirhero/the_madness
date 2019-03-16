@@ -29,6 +29,7 @@ const SystemInstancingBuild = CES.System.extend({
             vertices: [],
             textures: [texture],
             vb: null,
+            num_draw: 0,
           };
         }
 
@@ -38,6 +39,7 @@ const SystemInstancingBuild = CES.System.extend({
             vertices: [],
             textures: [texture],
             vb: null,
+            num_draw: 0,
           };
         }
 
