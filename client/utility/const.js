@@ -31,9 +31,9 @@ const BATCH_QUAD_I = function() {
     indices[offset++] = offset_idx;
     indices[offset++] = offset_idx + 1;
     indices[offset++] = offset_idx + 2;
-    indices[offset++] = offset_idx + 2;
-    indices[offset++] = offset_idx + 3;
     indices[offset++] = offset_idx + 1;
+    indices[offset++] = offset_idx + 3;
+    indices[offset++] = offset_idx + 2;
 
     offset_idx += 4/*quad*/;
   }

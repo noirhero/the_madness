@@ -5,7 +5,7 @@ const SystemUpdateCameraPos = CES.System.extend({
     this.is_wheel_press = false;
     this.move_x = 0;
     this.move_y = 0;
-    this.speed = 0.1;
+    this.speed = 50;
 
     CANVAS.addEventListener("mousedown", event => {
       if(1/*middle button*/ === event.button) {
@@ -32,8 +32,8 @@ const SystemUpdateCameraPos = CES.System.extend({
     this.world.getEntities("Viewport").forEach(entity => {
       const pos = entity.getComponent("Viewport").pos;
 
-      pos[0] += this.move_x * this.speed * delta;
-      pos[1] -= this.move_y * this.speed * delta;
+      pos[0] -= this.move_x * this.speed * delta;
+      pos[1] += this.move_y * this.speed * delta;
       this.move_x = 0;
       this.move_y = 0;
     });

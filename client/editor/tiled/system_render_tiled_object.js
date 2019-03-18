@@ -8,7 +8,7 @@ const SystemRenderTileObject = CES.System.extend({
       "uniform mat4 wvp_transform;",
 
       "void main() {",
-      "  gl_Position = wvp_transform * vec4(local_pos, -999.0, 1.0);",
+      "  gl_Position = wvp_transform * vec4(local_pos, 999.0, 1.0);",
       "}",
     ].join("\n"), GL.VERTEX_SHADER);
 

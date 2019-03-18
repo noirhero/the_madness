@@ -68,7 +68,7 @@
  </tileset>
  <layer id="1" name="background" width="80" height="15" locked="1">
   <properties>
-   <property name="z" type="float" value="100"/>
+   <property name="z" type="float" value="-100"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -90,7 +90,7 @@
  </layer>
  <layer id="2" name="floor" width="80" height="15" locked="1">
   <properties>
-   <property name="z" type="float" value="90"/>
+   <property name="z" type="float" value="-90"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -112,7 +112,7 @@
  </layer>
  <layer id="4" name="ceiling" width="80" height="15" locked="1">
   <properties>
-   <property name="z" type="float" value="80"/>
+   <property name="z" type="float" value="-80"/>
   </properties>
   <data encoding="csv">
 0,0,0,120,121,122,123,124,120,121,122,123,124,120,121,122,123,124,120,121,122,123,124,120,121,122,123,124,120,121,122,123,124,120,121,122,123,124,120,121,122,123,124,120,121,122,123,0,0,0,0,0,120,121,122,123,124,120,121,122,123,124,0,0,0,0,0,120,121,122,123,124,120,121,122,123,124,120,121,122,
@@ -134,7 +134,7 @@
  </layer>
  <layer id="7" name="object" width="80" height="15" locked="1">
   <properties>
-   <property name="z" type="float" value="70"/>
+   <property name="z" type="float" value="-70"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -156,7 +156,7 @@
  </layer>
  <layer id="5" name="pillar" width="80" height="15" locked="1">
   <properties>
-   <property name="z" type="float" value="-10"/>
+   <property name="z" type="float" value="10"/>
   </properties>
   <data encoding="csv">
 189,245,246,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,216,216,217,218,216,0,0,0,0,0,0,0,0,0,0,216,216,217,218,216,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -178,7 +178,7 @@
  </layer>
  <layer id="6" name="foreground" width="80" height="15" locked="1">
   <properties>
-   <property name="z" type="float" value="-20"/>
+   <property name="z" type="float" value="20"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

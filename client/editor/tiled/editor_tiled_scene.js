@@ -12,7 +12,7 @@ class EditorTiledScene extends Scene {
     entity.addComponent(new ComponentPlayer());
     entity.addComponent(new ComponentViewport());
     entity.addComponent(new ComponentPos());
-    entity.addComponent(new ComponentScale(32, 32))
+    entity.addComponent(new ComponentScale(50, 50))
     entity.addComponent(new ComponentTexture("../../data/texture/capsule.png"));
     entity.addComponent(new ComponentTexcoord());
 

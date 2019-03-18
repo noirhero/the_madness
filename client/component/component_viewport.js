@@ -11,8 +11,8 @@ const ComponentViewport = CES.Component.extend({
 
     this.width = 0;
     this.height = 0;
-    this.z_near = -1000;
-    this.z_far = 1000;
+    this.z_near = 1000;
+    this.z_far = -1000;
     this.transform_projection = glMatrix.mat4.create();
 
     this.transform_vp = glMatrix.mat4.create();

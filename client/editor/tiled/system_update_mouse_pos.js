@@ -6,22 +6,25 @@ const SystemUpdateMousePos = CES.System.extend({
     this.y = 0;
 
     CANVAS.addEventListener("mousemove", event => {
-      this.x = event.x - CANVAS_W * 0.5;
-      this.y = event.y - CANVAS_H * 0.5;
+      this.x = event.x;
+      this.y = CANVAS_H - event.y;
     }, false);
   },
   update: function() {
-    const viewport_in_entities = this.world.getEntities("Viewport");
-    if(0 === viewport_in_entities.length) {
+    const world = this.world;
+
+    let camera_pos = null;
+    if(false === world.getEntities("Viewport").some(entity => {
+      camera_pos = entity.getComponent("Viewport").pos;
+      return true;
+    })) {
       return;
     }
 
-    const camera_pos = viewport_in_entities[0].getComponent("Viewport").pos;
-
     this.world.getEntities("Player", "Pos").forEach(entity => {
       const pos = entity.getComponent("Pos").pos;
-      pos[0] = this.x + camera_pos[0] * CANVAS_W * -0.5;
-      pos[1] = -this.y + camera_pos[1] * CANVAS_H * -0.5;
+      pos[0] = this.x + camera_pos[0];
+      pos[1] = this.y + camera_pos[1];
     });
   },
 });
