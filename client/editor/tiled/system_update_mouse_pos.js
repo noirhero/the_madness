@@ -6,8 +6,8 @@ const SystemUpdateMousePos = CES.System.extend({
     this.y = 0;
 
     CANVAS.addEventListener("mousemove", event => {
-      this.x = event.x;
-      this.y = CANVAS_H - event.y;
+      this.x = event.x - CANVAS_W * 0.5;
+      this.y = CANVAS_H - event.y - CANVAS_H * 0.5;
     }, false);
   },
   update: function() {

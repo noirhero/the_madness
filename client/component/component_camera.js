@@ -5,6 +5,5 @@ const ComponentCamera = CES.Component.extend({
   init: function(type) {
     this.type = type || "follow";
     this.speed = 10;
-    this.pos = glMatrix.vec3.create();
   },
 });
