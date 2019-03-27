@@ -5,12 +5,16 @@ const SystemMovementNetPlayer = CES.System.extend({
     this.direction = glMatrix.vec3.create();
   },
   update: function(delta) {
-    const websocket_entities = this.world.getEntities("Websocket");
-    if(0 === websocket_entities.length) {
+    const world = this.world;
+
+    let sync_buffer = null;
+    if(false === world.getEntities("Websocket").some(entity => {
+      sync_buffer = entity.getComponent("Websocket").sync_buffer;
+      return true;
+    })) {
       return;
     }
 
-    const sync_buffer = websocket_entities[0].getComponent("Websocket").sync_buffer;
     let sync_data = sync_buffer.shift();
     while(sync_data) {
       const sync_id = sync_data.id;
@@ -18,15 +22,13 @@ const SystemMovementNetPlayer = CES.System.extend({
       const y = sync_data.y;
 
       let net_player_entity = null;
-      this.world.getEntities("NetPlayer", "Pos").some(entity => {
+      if(false === world.getEntities("NetPlayer", "Pos").some(entity => {
         if(sync_data.id === entity.getComponent("NetPlayer").id) {
           net_player_entity = entity;
           return true;
         }
         return false;
-      });
-
-      if(!net_player_entity) {
+      })) {
         ReadFile("data/entity_hero.json", entity_text => {
           const load_entity = EntityLoad(JSON.parse(entity_text));
           if(load_entity) {
@@ -54,18 +56,19 @@ const SystemMovementNetPlayer = CES.System.extend({
       sync_data = sync_buffer.shift();
     }
 
-    this.world.getEntities("NetPlayer", "Pos").forEach(entity => {
+    const direction = this.direction;
+    world.getEntities("NetPlayer", "Pos").forEach(entity => {
       const net_player_comp = entity.getComponent("NetPlayer");
       const net_player_pos = entity.getComponent("Pos").pos;
 
-      glMatrix.vec3.sub(this.direction, net_player_comp.net_pos, net_player_pos);
-      const length = glMatrix.vec3.length(this.direction);
+      glMatrix.vec3.sub(direction, net_player_comp.net_pos, net_player_pos);
+      const length = glMatrix.vec3.length(direction);
       if(1 > length) {
         return;
       }
 
-      glMatrix.vec3.scale(this.direction, this.direction, 1 / length);
-      glMatrix.vec3.scaleAndAdd(net_player_pos, net_player_pos, this.direction, net_player_comp.speed * delta);
+      glMatrix.vec3.scale(direction, direction, 1 / length);
+      glMatrix.vec3.scaleAndAdd(net_player_pos, net_player_pos, direction, net_player_comp.speed * delta);
     });
   },
 });

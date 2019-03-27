@@ -8,9 +8,7 @@ const SystemMovementAnim = CES.System.extend({
     };
 
     this.net_player_memories = [];
-  },
-  update: function() {
-    const process_fn = (memory, entity) => {
+    this.process_fn = (memory, entity) => {
       const pos = entity.getComponent("Pos").pos;
       const rot = entity.getComponent("Rot").rot;
       const anim_comp = entity.getComponent("Anim");
@@ -37,14 +35,18 @@ const SystemMovementAnim = CES.System.extend({
         }
       }
     };
+  },
+  update: function() {
+    const world = this.world;
+    const process_fn = this.process_fn;
 
     const player_memory = this.player_memory;
-    this.world.getEntities("Player", "Pos", "Rot", "Anim").forEach(entity => {
+    world.getEntities("Player", "Pos", "Rot", "Anim").forEach(entity => {
       process_fn(player_memory, entity);
     });
 
     const net_player_memories = this.net_player_memories;
-    this.world.getEntities("NetPlayer", "Pos", "Rot", "Anim").forEach(entity => {
+    world.getEntities("NetPlayer", "Pos", "Rot", "Anim").forEach(entity => {
       const net_player_id = entity.getComponent("NetPlayer").id;
       if(!net_player_memories[net_player_id]) {
         net_player_memories[net_player_id] = {

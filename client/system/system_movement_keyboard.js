@@ -33,11 +33,12 @@ const SystemMovementKeyboard = CES.System.extend({
     }, false);
   },
   update: function(delta) {
-    const mic_entites = this.world.getEntities("Mic");
-    if(0 < mic_entites.length) {
-      if(true === mic_entites[0].getComponent("Mic").is_recording) {
-        return;
-      }
+    const world = this.world;
+
+    if(true === world.getEntities("Mic").some(entity => {
+      return entity.getComponent("Mic").is_recording;
+    })) {
+      return;
     }
 
     const direction = this.direction;
@@ -49,7 +50,7 @@ const SystemMovementKeyboard = CES.System.extend({
       direction[0] += 1;
     }
 
-    this.world.getEntities("Player", "Pos").forEach(entity => {
+    world.getEntities("Player", "Pos").forEach(entity => {
       const speed = entity.getComponent("Player").move_speed;
       const pos = entity.getComponent("Pos").pos;
       glMatrix.vec3.scaleAndAdd(pos, pos, direction, delta * speed);

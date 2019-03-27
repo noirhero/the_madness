@@ -33,15 +33,19 @@ const SystemDebugDrawCollisionDetection = CES.System.extend({
     this.wvp_transform = glMatrix.mat4.create();
   },
   update: function() {
-    const viewport_entities = this.world.getEntities("Viewport");
-    if(0 === viewport_entities.length) {
+    const world = this.world;
+
+    let transform_vp = null;
+    if(false === world.getEntities("Viewport").some(entity => {
+      transform_vp = entity.getComponent("Viewport").transform_vp;
+      return true;
+    })) {
       return;
     }
 
     const u_wvp_transform = this.u_wvp_transform;
     const transform_w = this.w_transform;
     const transform_wvp = this.wvp_transform;
-    const transform_vp = viewport_entities[0].getComponent("Viewport").transform_vp;
 
     GL.useProgram(this.program);
     GL.bindBuffer(GL.ARRAY_BUFFER, this.sphere_vb);
@@ -49,7 +53,7 @@ const SystemDebugDrawCollisionDetection = CES.System.extend({
     GL.disableVertexAttribArray(2);
     GL.vertexAttribPointer(this.a_local_pos, 2, GL.FLOAT, false, 8, 0);
 
-    this.world.getEntities("Player").forEach(entity => {
+    world.getEntities("Player").forEach(entity => {
       const circle = entity.getComponent("Player").circle;
 
       glMatrix.mat4.fromRotationTranslationScale(transform_w, IDENTITY_QUAT, [circle.pos.x, circle.pos.y, 0], [circle.r, circle.r, 1]);
@@ -61,7 +65,7 @@ const SystemDebugDrawCollisionDetection = CES.System.extend({
     GL.bindBuffer(GL.ARRAY_BUFFER, this.box_vb);
     GL.vertexAttribPointer(this.a_local_pos, 2, GL.FLOAT, false, 8, 0);
 
-    this.world.getEntities("Bounding", "Pos", "Scale").forEach(entity => {
+    world.getEntities("Bounding", "Pos", "Scale").forEach(entity => {
       const box = entity.getComponent("Bounding").data;
       if(!box) {
         return;

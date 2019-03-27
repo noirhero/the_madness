@@ -5,19 +5,22 @@ const SystemMovementCollisionDetection = CES.System.extend({
     this.response = new SAT.Response();
   },
   update: function() {
-    const player_entites = this.world.getEntities("Player", "Pos");
-    if(0 === player_entites.length) {
+    const world = this.world;
+
+    let player_pos = null;
+    let player_circle = null;
+    if(false === world.getEntities("Player", "Pos").some(entity => {
+      player_pos = entity.getComponent("Pos").pos;
+      player_circle = entity.getComponent("Player").circle;
+      player_circle.pos.x = player_pos[0];
+      player_circle.pos.y = player_pos[1];
+      return true;
+    })) {
       return;
     }
 
-    const player_pos = player_entites[0].getComponent("Pos").pos;
-    const player_circle = player_entites[0].getComponent("Player").circle;
     const response = this.response;
-
-    player_circle.pos.x = player_pos[0];
-    player_circle.pos.y = player_pos[1];
-
-    this.world.getEntities("Obstacle", "Pos", "Scale").forEach(entity => {
+    world.getEntities("Obstacle", "Pos", "Scale").forEach(entity => {
       const obstacle_comp = entity.getComponent("Obstacle")
       if(!obstacle_comp.data) {
         const pos = entity.getComponent("Pos").pos;

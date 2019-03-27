@@ -12,33 +12,35 @@ const SystemMovementSend = CES.System.extend({
       return;
     }
 
-    const player_entites = this.world.getEntities("Player", "Pos");
-    if(0 === player_entites.length) {
+    const world = this.world;
+
+    let websocket_comp = null;
+    if(false === world.getEntities("Websocket").some(entity => {
+      websocket_comp = entity.getComponent("Websocket");
+      return (!websocket_comp.socket) ? false : true;
+    })) {
       return;
     }
 
-    const player_pos = player_entites[0].getComponent("Pos").pos;
-    const dist = glMatrix.vec3.dist(player_pos, this.send_pos);
-    if(0.1 > dist) {
-      return;
-    }
+    const send_pos = this.send_pos;
+    let player_pos = null;
+    let player_id = null;
+    if(false === world.getEntities("Player", "Pos").some(entity => {
+      player_pos = entity.getComponent("Pos").pos;
+      player_id = entity.getComponent("Player").id;
 
-    const websocket_entities = this.world.getEntities("Websocket");
-    if(0 === websocket_entities.length) {
-      return;
-    }
-
-    const websocket_comp = websocket_entities[0].getComponent("Websocket");
-    if(!websocket_comp.socket) {
+      const dist = glMatrix.vec3.dist(player_pos, send_pos);
+      return (1 > dist) ? false : true;
+    })) {
       return;
     }
 
     websocket_comp.socket.send(JSON.stringify({
-      id: player_entites[0].getComponent("Player").id,
+      id: player_id,
       x: Math.floor(player_pos[0]),
       y: Math.floor(player_pos[1]),
     }, null, " "));
     this.send_time = now;
-    glMatrix.vec3.copy(this.send_pos, player_pos);
+    glMatrix.vec3.copy(send_pos, player_pos);
   },
 });

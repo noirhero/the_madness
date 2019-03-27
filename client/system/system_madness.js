@@ -5,17 +5,23 @@ const SystemMadness = CES.System.extend({
     this.player_pos = new SAT.V();
   },
   update: function() {
-    const player_entities = this.world.getEntities("Player", "Pos");
-    if(0 === player_entities.length) {
+    const world = this.world;
+    const player_pos = this.player_pos;
+
+    let player_comp = null;
+    if(false === world.getEntities("Player", "Pos").some(entity => {
+      player_comp = entity.getComponent("Player");
+
+      const pos = entity.getComponent("Pos").pos;
+      player_pos.x = pos[0];
+      player_pos.y = pos[1];
+
+      return true;
+    })) {
       return;
     }
 
-    const player_comp = player_entities[0].getComponent("Player");
-    const player_pos = player_entities[0].getComponent("Pos").pos;
-    this.player_pos.x = player_pos[0];
-    this.player_pos.y = player_pos[1];
-
-    this.world.getEntities("Madness", "Pos", "Scale").forEach(entity => {
+    world.getEntities("Madness", "Pos", "Scale").forEach(entity => {
       const madness_comp = entity.getComponent("Madness");
       if("once" == madness_comp.type && true === madness_comp.is_use) {
         return;
