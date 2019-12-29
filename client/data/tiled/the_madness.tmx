@@ -1,72 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="80" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="27">
- <tileset firstgid="1" name="bg" tilewidth="256" tileheight="240" tilecount="5" columns="0">
-  <grid orientation="orthogonal" width="1" height="1"/>
-  <tile id="0">
-   <image width="256" height="240" source="backgrounds/background-pattern-1.png"/>
-  </tile>
-  <tile id="1">
-   <image width="256" height="240" source="backgrounds/background-pattern-2.png"/>
-  </tile>
-  <tile id="2">
-   <image width="256" height="240" source="backgrounds/background-pattern-3.png"/>
-  </tile>
-  <tile id="3">
-   <image width="256" height="240" source="backgrounds/background-pattern-empty-bookcase.png"/>
-  </tile>
-  <tile id="4">
-   <image width="256" height="240" source="backgrounds/background-pattern-window.png"/>
-  </tile>
- </tileset>
- <tileset firstgid="6" name="tileset" tilewidth="16" tileheight="16" tilecount="364" columns="28">
-  <image source="tileset.png" width="448" height="208"/>
- </tileset>
- <tileset firstgid="370" name="objects" tilewidth="92" tileheight="111" tilecount="9" columns="0">
-  <grid orientation="orthogonal" width="1" height="1"/>
-  <tile id="0">
-   <image width="21" height="49" source="objects/candle.png"/>
-  </tile>
-  <tile id="1">
-   <image width="55" height="85" source="objects/chandelier.png"/>
-  </tile>
-  <tile id="2">
-   <image width="45" height="24" source="objects/chest.png"/>
-  </tile>
-  <tile id="3">
-   <image width="39" height="29" source="objects/crate.png"/>
-  </tile>
-  <tile id="4">
-   <image width="32" height="42" source="objects/platform.png"/>
-  </tile>
-  <tile id="5">
-   <image width="92" height="56" source="objects/table.png"/>
-  </tile>
-  <tile id="6">
-   <image width="65" height="111" source="objects/wardrobe.png"/>
-  </tile>
-  <tile id="7">
-   <image width="51" height="56" source="objects/weapons-rack.png"/>
-  </tile>
-  <tile id="8">
-   <image width="51" height="56" source="objects/weapons-rack-empty.png"/>
-  </tile>
- </tileset>
- <tileset firstgid="379" name="foreground" tilewidth="102" tileheight="73" tilecount="4" columns="0">
-  <grid orientation="orthogonal" width="1" height="1"/>
-  <tile id="0">
-   <image width="66" height="44" source="foreground-elements/basket.png"/>
-  </tile>
-  <tile id="1">
-   <image width="13" height="49" source="foreground-elements/bottle.png"/>
-  </tile>
-  <tile id="2">
-   <image width="38" height="73" source="foreground-elements/candle.png"/>
-  </tile>
-  <tile id="3">
-   <image width="102" height="62" source="foreground-elements/ropes.png"/>
-  </tile>
- </tileset>
- <layer id="1" name="background" width="80" height="15" locked="1">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="80" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="27">
+ <tileset firstgid="1" source="bg.tsx"/>
+ <tileset firstgid="6" source="tileset.tsx"/>
+ <tileset firstgid="370" source="objects.tsx"/>
+ <tileset firstgid="379" source="foreground.tsx"/>
+ <layer id="1" name="background" width="80" height="15" visible="0" locked="1">
   <properties>
    <property name="z" type="float" value="-100"/>
   </properties>
