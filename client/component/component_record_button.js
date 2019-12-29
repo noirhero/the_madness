@@ -19,5 +19,6 @@ const ComponentRecordButton = CES.Component.extend({
     this.height_ratio = 0.1;
     this.right_offset = 0.5;
     this.bottom_offset = 0.5;
+    this.max_scale = 100;
   },
 });

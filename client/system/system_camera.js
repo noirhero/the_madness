@@ -6,20 +6,20 @@ const SystemCamera = CES.System.extend({
   },
   update: function(delta) {
     const world = this.world;
-    const player_pos = this.player_pos;
 
-    if(false === world.getEntities("Player", "Pos").some(entity => {
-      const pos = entity.getComponent("Pos").pos;
-      player_pos.x = pos[0];
-      player_pos.y = pos[1];
+    let viewport = null;
+    if(false === world.getEntities("Viewport").some(entity => {
+      viewport = entity.getComponent("Viewport");
       return true;
     })) {
       return;
     }
 
-    let viewport = null;
-    if(false === world.getEntities("Viewport").some(entity => {
-      viewport = entity.getComponent("Viewport");
+    const player_pos = this.player_pos;
+    if(false === world.getEntities("Player", "Pos").some(entity => {
+      const pos = entity.getComponent("Pos").pos;
+      player_pos.x = pos[0];
+      player_pos.y = pos[1];
       return true;
     })) {
       return;
